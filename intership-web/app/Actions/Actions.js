@@ -8,6 +8,8 @@ import {ActionTypes, AsyncActionTypes} from './Consts';
  */
 export class Actions {
     constructor(/*private*/ dispatch/*: Dispatch<IActionType>*/) {
+        this.dispatch = dispatch
+
     }
 
     onClick = async (increment/*: number*/) => {
@@ -26,9 +28,12 @@ export class Actions {
 
         const options = {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
             body: JSON.stringify(loginData),
         };
-        fetch('http://127.0.0.1:8080/login', options)
+        fetch('http://127.0.0.1:8080/authorize', options)
             .then(response => {
                 if (response.status === 200) {
                     this.dispatch({type: `${ActionTypes.LOGIN}${AsyncActionTypes.SUCCESS}`});

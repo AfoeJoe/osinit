@@ -46,8 +46,9 @@ class App extends React.Component /*<TProps, {}> */ {
    * Обработчик авторизации пользователя.
    */
   handleLogin = () =>
-    this.props.actions.onLogin({ name: "admin", password: "1" });
-
+    this.props.actions.onLogin({
+      loginData: { login: "user", password: "123" }
+    });
   /**
    * Обработчик выхода из системы.
    */
