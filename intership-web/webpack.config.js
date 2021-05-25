@@ -34,6 +34,10 @@ function buildConfig(env) {
                     'less-loader'
                 ]
             }, {
+                test: /\.(png|j?g|gif|svg)?$/,
+                use: 
+                    'file-loader'
+            }, {
                 test: /\.css$/,
                 use: [
                     {loader: MiniCssExtractPlugin.loader},
