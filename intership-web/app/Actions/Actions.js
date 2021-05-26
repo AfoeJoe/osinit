@@ -23,7 +23,7 @@ export class Actions {
         this.dispatch({type: `${ActionTypes.CLICK}${AsyncActionTypes.SUCCESS}`, payload: increment});
     };
 
-    onLogin = (loginData/*: ILoginData*/) => {
+    onLogin = async (loginData/*: ILoginData*/) => {
         this.dispatch({type: `${ActionTypes.LOGIN}${AsyncActionTypes.BEGIN}`});
 
         const options = {
@@ -33,7 +33,7 @@ export class Actions {
             },
             body: JSON.stringify(loginData),
         };
-        fetch('http://127.0.0.1:8080/authorize', options)
+        await fetch('http://127.0.0.1:8080/authorize', options)
             .then(response => {
                 if (response.status === 200) {
                     this.dispatch({type: `${ActionTypes.LOGIN}${AsyncActionTypes.SUCCESS}`});

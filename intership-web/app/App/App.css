@@ -15,11 +15,3 @@ body,
     min-height: 100%;
     position: relative
 }
-
-main {
-    flex-grow: 1
-}
-
-footer {
-    flex-shrink: 0
-}

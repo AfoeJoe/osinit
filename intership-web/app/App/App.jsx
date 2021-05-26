@@ -8,7 +8,11 @@ import "./App.css";
 import LoginPage from "./pages/loginPage/Login";
 import { routes } from "./utils/constants";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
+import OrganizationPage from "./pages/organizationPage/OrganizationPage";
+import NavBar from "./components/navBar/NavBar";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import DivisionPage from "./pages/divisionPage/DivisionPage";
+import EemployeePage from "./pages/employeePage/EemployeePage";
 
 /**
  * Пропсы компонента из стора.
@@ -40,29 +44,25 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 /**
  * Основной класс приложения.
  */
-class App extends React.Component /*<TProps, {}> */ {
-  /**
-   * Обработчик запуска вычисления.
-   */
-
-  /**
-   * Обработчик авторизации пользователя.
-   */
-
-  /**
-   * Обработчик выхода из системы.
-   */
+export class App extends React.Component /*<TProps, {}> */ {
 
   render() {
     return (
       <Router>
- 
-
+        <div>
+          <NavBar />
           {/* A <Switch> looks through its children <Route>s and
     renders the first one that matches the current URL. */}
           <Switch>
-            {/* <Route path={routes.ORGANIZATION} component={OrganizationPage}/> */}
-
+            <PrivateRoute path={routes.ORGANIZATION}>
+              <OrganizationPage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.DIVISION}>
+              <DivisionPage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.EMPLOYEES}>
+              <EemployeePage />
+            </PrivateRoute>
             <Route exact path={routes.HOME}>
               <LoginPage />
             </Route>
@@ -70,12 +70,8 @@ class App extends React.Component /*<TProps, {}> */ {
               <LoginPage />
             </Route>
           </Switch>
+        </div>
       </Router>
     );
   }
 }
-
-
-const connectApp = connect(null, null)(App);
-
-export { connectApp as App };
