@@ -1,12 +1,12 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import Button from "../../components/customButton/CustomButton";
 import InputField from "../../components/inputField/InputField";
 import Logo from "../../resources/Logo.png";
-import "./login.css";
-import { connect } from "react-redux";
-// import { push } from "connected-react-router";
-import { withRouter } from "react-router-dom";
 import { routes } from "../../utils/constants";
+import { Actions } from "../../../Actions/Actions";
+import "./login.css";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -14,7 +14,6 @@ class LoginPage extends React.Component {
     this.state = {
       username: "",
       password: "",
-      error: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,12 +22,22 @@ class LoginPage extends React.Component {
   }
   handleSubmit(e) {
     const { username, password } = this.state;
-    console.log('user: '+username+' password: '+password)
+    const result = this.props.actions.onLogin({
+      loginData: { login: username, password: password },
+    });
+    result.then(() => {
+      if (this.props.loginStatus) {
+        const from =
+          (this.props.history.location.state &&
+            this.props.history.location.state.from.pathname) ||
+          routes.ORGANIZATION;
+        this.props.history.push(from);
+      }
+    });
     e.preventDefault();
   }
   handleChange(e) {
     const { value, name } = e.target;
-
     this.setState({ [name]: value });
   }
   render() {
@@ -66,7 +75,8 @@ class LoginPage extends React.Component {
 
             <Button
               type="submit"
-              text="Sign In" className={`btn-primary btn-lg  btn-block`}
+              text="Sign In"
+              className={`btn-primary btn-lg  btn-block`}
               disabled={this.props.waitingForLogin}
             />
 
@@ -78,6 +88,18 @@ class LoginPage extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    loginStatus: state.Auth.loginStatus,
+    waitingForLogin: state.Auth.loading,
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: new Actions(dispatch),
+  };
+}
+
 export default withRouter(
-  connect(null, null)(LoginPage)
+  connect(mapStateToProps, mapDispatchToProps)(LoginPage)
 );
