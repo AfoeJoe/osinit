@@ -1,13 +1,12 @@
 import * as React from "react";
-import Logo from "../../resources/Logo.png";
 import { Link } from "react-router-dom";
-import { routes } from "../../utils/constants";
 import { connect } from "react-redux";
+import { routes } from "../../utils/constants";
 import { Actions } from "../../../Actions/Actions";
+import Logo from "../../resources/Logo.png";
 
 function Navbar(props) {
   const {loginStatus,actions}= props;
-
   return (
     <>
       {loginStatus && (

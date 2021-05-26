@@ -1,13 +1,13 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Switch, Route, Link } from "react-router-dom";
 import { IActionType } from "../common";
 import { Actions } from "../Actions/Actions";
 import { IStoreState } from "../Reducers/Reducers";
 import "./App.css";
 import LoginPage from "./pages/loginPage/Login";
 import { routes } from "./utils/constants";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import OrganizationPage from "./pages/organizationPage/OrganizationPage";
 import NavBar from "./components/navBar/NavBar";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
@@ -48,7 +48,6 @@ export class App extends React.Component /*<TProps, {}> */ {
 
   render() {
     return (
-      <Router>
         <div>
           <NavBar />
           {/* A <Switch> looks through its children <Route>s and
@@ -71,7 +70,6 @@ export class App extends React.Component /*<TProps, {}> */ {
             </Route>
           </Switch>
         </div>
-      </Router>
     );
   }
 }

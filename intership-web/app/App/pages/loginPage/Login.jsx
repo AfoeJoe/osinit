@@ -1,13 +1,12 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import Button from "../../components/customButton/CustomButton";
 import InputField from "../../components/inputField/InputField";
 import Logo from "../../resources/Logo.png";
-import "./login.css";
-import { connect } from "react-redux";
-// import { push } from "connected-react-router";
-import { withRouter } from "react-router-dom";
 import { routes } from "../../utils/constants";
 import { Actions } from "../../../Actions/Actions";
+import "./login.css";
 
 class LoginPage extends React.Component {
   constructor(props) {
