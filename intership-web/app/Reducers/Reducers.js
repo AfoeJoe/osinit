@@ -4,6 +4,8 @@ import { combineReducers } from "redux";
 import { History } from "history";
 import ExampleReducer /*, { IExample } */ from "./ExampleReducer";
 import AuthReducer from './AuthReducer'
+import ModalReducer from './ModalReducer'
+import OrganizationReducer from './OrganizationReducer'
 
 /**
  * @interface
@@ -24,6 +26,9 @@ const createRootReducer = (history /*: History*/) =>
       router: connectRouter(history),
       Example: ExampleReducer,
       Auth: AuthReducer,
+      Modal:ModalReducer,
+      Organization:OrganizationReducer
+
     }
   );
 
