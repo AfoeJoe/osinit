@@ -1,10 +1,18 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Switch, Route } from "react-router-dom";
 import { IActionType } from "../common";
 import { Actions } from "../Actions/Actions";
 import { IStoreState } from "../Reducers/Reducers";
 import "./App.css";
+import LoginPage from "./pages/loginPage/Login";
+import { routes } from "./utils/constants";
+import OrganizationPage from "./pages/organizationPage/OrganizationPage";
+import NavBar from "./components/navBar/NavBar";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import DivisionPage from "./pages/divisionPage/DivisionPage";
+import EemployeePage from "./pages/employeePage/EemployeePage";
 
 /**
  * Пропсы компонента из стора.
@@ -36,81 +44,32 @@ import "./App.css";
 /**
  * Основной класс приложения.
  */
-class App extends React.Component /*<TProps, {}> */ {
-  /**
-   * Обработчик запуска вычисления.
-   */
-  handleClick = () => this.props.actions.onClick(2);
-
-  /**
-   * Обработчик авторизации пользователя.
-   */
-  handleLogin = () =>
-    this.props.actions.onLogin({
-      loginData: { login: "user", password: "123" }
-    });
-  /**
-   * Обработчик выхода из системы.
-   */
-  handleLogout = () => this.props.actions.onLogout();
+export class App extends React.Component /*<TProps, {}> */ {
 
   render() {
-    const { loginStatus, waitingForLogin, countResult, counting } = this.props;
     return (
-      <div>
-        <h3>Boilerplate</h3>
-        {waitingForLogin ? (
-          <p>Авторизация...</p>
-        ) : loginStatus ? (
-          <p>Login success</p>
-        ) : (
-          <p>Logged out</p>
-        )}
-        <input
-          className="btn btn-outline-secondary"
-          disabled={waitingForLogin}
-          type="button"
-          value="+"
-          onClick={this.handleClick}
-        />
-        <input
-          className="btn btn-outline-primary"
-          disabled={waitingForLogin}
-          type="button"
-          value="login"
-          onClick={this.handleLogin}
-        />
-        <input
-          className="btn btn-outline-warning"
-          disabled={waitingForLogin || counting}
-          type="button"
-          value="logout"
-          onClick={this.handleLogout}
-        />
-        {counting && <p>Подсчет...</p>}
-        {!counting && countResult > 0 && (
-          <p className="red-color">{countResult}</p>
-        )}
-      </div>
+        <>
+          <NavBar />
+          {/* A <Switch> looks through its children <Route>s and
+    renders the first one that matches the current URL. */}
+          <Switch>
+            <PrivateRoute path={routes.ORGANIZATION}>
+              <OrganizationPage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.DIVISION}>
+              <DivisionPage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.EMPLOYEES}>
+              <EemployeePage />
+            </PrivateRoute>
+            <Route exact path={routes.HOME}>
+              <LoginPage />
+            </Route>
+            <Route exact path={routes.LOGIN}>
+              <LoginPage />
+            </Route>
+          </Switch>
+        </>
     );
   }
 }
-
-function mapStateToProps(state/*: IStoreState*/)/*: IStateProps */{
-  return {
-    loginStatus: state.Example.loginStatus,
-    waitingForLogin: state.Example.loading,
-    countResult: state.Example.counter,
-    counting: state.Example.counterIsLoading
-  };
-}
-
-function mapDispatchToProps(dispatch/*: Dispatch<IActionType>*/)/*: IDispatchProps*/ {
-  return {
-    actions: new Actions(dispatch)
-  };
-}
-
-const connectApp = connect(mapStateToProps, mapDispatchToProps)(App);
-
-export { connectApp as App };

@@ -1,3 +1,6 @@
 #/intership-api
 /web-finished
 /node_modules
+/dist
+/dailyReport
+/.DS_Store
