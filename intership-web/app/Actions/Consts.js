@@ -14,6 +14,11 @@ export const ActionTypes = {
     LOGOUT: 'ACTION_LOGOUT',
     CLICK: 'ACTION_CLICK',
 }
+export const ModalActionTypes = {
+    EDIT: 'TOGGLE_EDIT',
+    ADD: 'TOGGLE_ADD',
+    DELETE: 'TOGGLE_DELETE',
+}
 
 /**
  * Подтипы для экшенов при ассинхронной работы.
