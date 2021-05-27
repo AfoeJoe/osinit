@@ -48,7 +48,7 @@ export class App extends React.Component /*<TProps, {}> */ {
 
   render() {
     return (
-        <div>
+        <>
           <NavBar />
           {/* A <Switch> looks through its children <Route>s and
     renders the first one that matches the current URL. */}
@@ -69,7 +69,7 @@ export class App extends React.Component /*<TProps, {}> */ {
               <LoginPage />
             </Route>
           </Switch>
-        </div>
+        </>
     );
   }
 }
