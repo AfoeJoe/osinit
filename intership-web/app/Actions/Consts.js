@@ -20,7 +20,6 @@ export const ActionTypes = {
 }
 export const ModalActionTypes = {
     EDIT: 'TOGGLE_EDIT',
-    ADD: 'TOGGLE_ADD',
     DELETE: 'TOGGLE_DELETE',
 }
 

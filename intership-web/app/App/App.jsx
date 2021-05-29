@@ -53,10 +53,10 @@ export class App extends React.Component /*<TProps, {}> */ {
         {/* A <Switch> looks through its children <Route>s and
     renders the first one that matches the current URL. */}
         <Switch>
-          <PrivateRoute path={routes.ORGANIZATION} comp={OrganizationPage}/>
-          <PrivateRoute exact path={routes.DIVISION} comp={DivisionPage}/>
-          <PrivateRoute path={routes.EMPLOYEES} comp={EemployeePage}/ >
-        
+          <PrivateRoute path={routes.ORGANIZATION} comp={OrganizationPage} />
+          <PrivateRoute exact path={routes.DIVISION} comp={DivisionPage} />
+          <PrivateRoute path={routes.EMPLOYEES} comp={EemployeePage} />
+
           <Route exact path={routes.HOME}>
             <LoginPage />
           </Route>
@@ -64,7 +64,7 @@ export class App extends React.Component /*<TProps, {}> */ {
             <LoginPage />
           </Route>
           <Route path="*">
-            <NoMatch/>
+            <NoMatch />
           </Route>
         </Switch>
       </>

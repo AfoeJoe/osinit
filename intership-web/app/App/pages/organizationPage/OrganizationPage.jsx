@@ -8,7 +8,7 @@ import DeleteModal from "../../components/deleteModal/DeleteModal";
 import { Actions } from "../../../Actions/Actions";
 
 export default function OrganizationPage() {
-  const [openAdd, setOpenAdd] = React.useState(false);
+  const [openAdd, setOpenEdit] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const { openAdd, openEdit, openDelete } = useSelector((state) => state.Modal);
@@ -31,7 +31,7 @@ export default function OrganizationPage() {
           <CustomButton
             text="Add Organization"
             className="d-flex btn-primary"
-            onClick={actions.toggleAdd}
+            onClick={actions.toggleEdit}
           >
         <i className="material-icons">&#xE147;</i>{" "}
           </CustomButton>
@@ -41,7 +41,7 @@ export default function OrganizationPage() {
           {organizations && <Table organizations={organizations} />}
         </div>
         {/*<!-- Add Modal HTML */}
-        {openAdd && <AddModal setOpenAdd={setOpenAdd} />}
+        {openEdit && <EditModal setOpenEdit={setOpenEdit} />}
         {/* Edit Modal HTM*/}
         {openEdit && <EditModal />}
 

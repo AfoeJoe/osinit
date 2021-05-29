@@ -67,7 +67,6 @@ export class Actions {
   };
 
   /*MODAL ACTIONS*/
-  toggleAdd = () => this.dispatch({ type: ModalActionTypes.ADD });
   toggleEdit = (data={}) => {this.dispatch({ type: ModalActionTypes.EDIT,payload:data })};
   toggleDelete = (data) => this.dispatch({ type: ModalActionTypes.DELETE,payload:data });
 

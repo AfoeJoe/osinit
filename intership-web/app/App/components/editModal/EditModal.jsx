@@ -1,35 +1,28 @@
 import * as React from "react";
-import {useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../Actions/Actions";
 
-function EditModal({
-  setOpenAdd,
-  text,
-  children,
-  disabled,
-  className,
-  ...rest
-}) {
+function EditModal({ setOpenEdit, ...rest }) {
   const dispatch = useDispatch();
-  const { toggleEdit,editOrganization } = new Actions(dispatch);
+  const { toggleEdit, editOrganization, createOrganization } = new Actions(
+    dispatch
+  );
   const { editData } = useSelector((state) => state.Modal);
-  const [name, setName] = React.useState(editData.name);
-  const [address, setAddress] = React.useState(editData.address);
-  const [inn, setInn] = React.useState(editData.INN);
+  const [name, setName] = React.useState(editData.name || "");
+  const [address, setAddress] = React.useState(editData.address || "");
+  const [inn, setInn] = React.useState(editData.INN || 0);
   const [error, setError] = React.useState("");
-
-
+  const isAdd = editData.name ? false : true;
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inn.toString().length );
-    if (name.length < 1 || address.length < 1 || inn.toString().length != 10) {
+    if (!name || !address || inn.toString().length != 10) {
       setError("Please,Provide valid details!");
       return;
     }
-    editOrganization({id:editData.id, name, address, INN:inn })
-    // .then(res=>console.log(res)
-    // )
-     toggleEdit();
+    if (isAdd) {
+      createOrganization({ name, address, INN: inn });
+    } else editOrganization({ id: editData.id, name, address, INN: inn });
+    toggleEdit();
   };
   return (
     <div id="addEmployeeModal" className="modal fade show">
@@ -37,7 +30,9 @@ function EditModal({
         <div className="modal-content">
           <form onSubmit={handleSubmit}>
             <div className="modal-header">
-              <h4 className="modal-title">Edit Organization</h4>
+              <h4 className="modal-title">
+                {isAdd ? "Add" : "Edit"} Organization'
+              </h4>
               <button
                 type="button"
                 className="close"
@@ -94,7 +89,11 @@ function EditModal({
                 value="Cancel"
                 onClick={toggleEdit}
               />
-              <input type="submit" className="btn btn-success" value="Add" />
+              <input
+                type="submit"
+                className="btn btn-success"
+                value={isAdd ? "Add" : "Edit"}
+              />
             </div>
           </form>
         </div>
