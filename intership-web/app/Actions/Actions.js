@@ -28,18 +28,18 @@ export class Actions {
           return response.json();
           
         } else {
-          throw "error";
+          throw "server error";
         }
       }).then(response=>{
-        console.log(response.isLogin);
 
         if (response.isLogin) {
           this.dispatch({
             type: `${ActionTypes.LOGIN}${AsyncActionTypes.SUCCESS}`,
           });
         }else {
-          throw "error";
+          throw "login details errors";
         }
+        return response.isLogin
       })
       .catch((error) => {
         this.dispatch({

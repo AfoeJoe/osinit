@@ -14,6 +14,7 @@ class LoginPage extends React.Component {
     this.state = {
       username: "",
       password: "",
+      stateError: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,18 +23,32 @@ class LoginPage extends React.Component {
   }
   handleSubmit(e) {
     const { username, password } = this.state;
-    const result = this.props.actions.onLogin({
-      loginData: { login: username, password: password },
-    });
-    result.then(() => {
-      if (this.props.loginStatus) {
-        const from =
-          (this.props.history.location.state &&
-            this.props.history.location.state.from.pathname) ||
-          routes.ORGANIZATION;
-        this.props.history.push(from);
-      }
-    })
+    if (!username || !password) {
+      this.setState({ stateError: "Please, fill in your login details" });
+      return;
+    }
+    try {
+      const result = this.props.actions.onLogin({
+        loginData: { login: username, password: password },
+      });
+      result
+        .then(() => {
+          if (this.props.loginStatus) {
+            const from =
+              (this.props.history.location.state &&
+                this.props.history.location.state.from.pathname) ||
+              routes.ORGANIZATION;
+            this.props.history.push(from);
+          }
+        })
+        .catch((error) => {
+          throw error;
+        });
+    } catch (error) {
+      this.setState({ stateError: "Please, fill in your login details" });
+      console.log(error);
+    }
+
     e.preventDefault();
   }
   handleChange(e) {
@@ -67,9 +82,11 @@ class LoginPage extends React.Component {
               handleChange={this.handleChange}
               value={this.state.password}
             />
-             {this.props.error && (
+            {(this.props.error || this.state.stateError) && (
               <div className="alert alert-danger" role="alert">
-                {this.props.error}{" Please, provide login details"}
+                {typeof this.props.error !== "object" &&
+                 this.props.error}
+                {" try again"}
               </div>
             )}
             <div className="checkbox mb-3">
@@ -97,7 +114,7 @@ function mapStateToProps(state) {
   return {
     loginStatus: state.Auth.loginStatus,
     waitingForLogin: state.Auth.loading,
-    error:state.Auth.error
+    error: state.Auth.error,
   };
 }
 function mapDispatchToProps(dispatch) {
