@@ -3,16 +3,16 @@ import { Route, Redirect, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { routes } from "../../utils/constants";
 
-function PrivateRoute({ children, loginStatus, ...rest }) {
+function PrivateRoute({ comp:Component, loginStatus, ...rest }) {
   return (
     <Route
       {...rest}
-      render={({ location }) =>
+      render={(props) =>
         loginStatus ? (
-          children
+          <Component {...props}/>
         ) : (
           <Redirect
-            to={{ pathname: routes.LOGIN, state: { from: location } }}
+            to={{ pathname: routes.LOGIN, state: { from: props.location } }}
           ></Redirect>
         )
       }

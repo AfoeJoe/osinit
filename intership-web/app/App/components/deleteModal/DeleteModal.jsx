@@ -1,17 +1,25 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { Actions } from "../../../Actions/Actions";
 
 function DeleteModal({ text, children, disabled, className, ...rest }) {
   const dispatch = useDispatch();
-  const { toggleDelete} = new Actions(dispatch);
+  const { toggleDelete,deleteOrganization} = new Actions(dispatch);
+  const { deleteData } = useSelector((state) => state.Modal);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    deleteOrganization(deleteData.id)
+    // .then(res=>console.log(res)
+    // )
+     toggleDelete();
+  };
   return (
     <div id="deleteEmployeeModal" className="modal fade show">
       <div className="modal-dialog">
         <div className="modal-content">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="modal-header">
-              <h4 className="modal-title">Delete Employee</h4>
+              <h4 className="modal-title">Delete Organization</h4>
               <button
                 type="button"
                 className="close"
@@ -22,7 +30,8 @@ function DeleteModal({ text, children, disabled, className, ...rest }) {
               </button>
             </div>
             <div className="modal-body">
-              <p>Are you sure you want to delete these Records?</p>
+              
+              <p>Are you sure you want to delete {deleteData.name} with id of {deleteData.id}?</p>
               <p className="text-warning">
                 <small>This action cannot be undone.</small>
               </p>

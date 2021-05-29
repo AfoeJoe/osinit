@@ -1,53 +1,100 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import {useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../Actions/Actions";
 
-function EditModal({ text, children, disabled, className, ...rest }) {
+function EditModal({
+  setOpenAdd,
+  text,
+  children,
+  disabled,
+  className,
+  ...rest
+}) {
   const dispatch = useDispatch();
-  const { toggleEdit } = new Actions(dispatch);
+  const { toggleEdit,editOrganization } = new Actions(dispatch);
+  const { editData } = useSelector((state) => state.Modal);
+  const [name, setName] = React.useState(editData.name);
+  const [address, setAddress] = React.useState(editData.address);
+  const [inn, setInn] = React.useState(editData.INN);
+  const [error, setError] = React.useState("");
 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inn.toString().length );
+    if (name.length < 1 || address.length < 1 || inn.toString().length != 10) {
+      setError("Please,Provide valid details!");
+      return;
+    }
+    editOrganization({id:editData.id, name, address, INN:inn })
+    // .then(res=>console.log(res)
+    // )
+     toggleEdit();
+  };
   return (
-    <div id="editEmployeeModal" className="modal fade show">
+    <div id="addEmployeeModal" className="modal fade show">
       <div className="modal-dialog">
         <div className="modal-content">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="modal-header">
-              <h4 className="modal-title">Edit Employee</h4>
+              <h4 className="modal-title">Edit Organization</h4>
               <button
                 type="button"
                 className="close"
                 data-dismiss="modal"
-                aria-hidden="true"   onClick={toggleEdit}
+                aria-hidden="true"
+                onClick={toggleEdit}
               >
                 &times;
               </button>
             </div>
+            {error && (
+              <div className="alert alert-danger" role="alert">
+                {error}{" "}
+              </div>
+            )}
             <div className="modal-body">
-              <div className="form-group">
-                <label>Name</label>
-                <input type="text" className="form-control" required />
-              </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input type="email" className="form-control" required />
-              </div>
-              <div className="form-group">
-                <label>Address</label>
-                <textarea className="form-control" required></textarea>
-              </div>
-              <div className="form-group">
-                <label>Phone</label>
-                <input type="text" className="form-control" required />
-              </div>
+              <InputField
+                id="orgName"
+                name="Organization Name"
+                autoComplete="name"
+                type="text"
+                label="Organization Name"
+                isRequired={true}
+                handleChange={(e) => setName(e.target.value)}
+                value={name}
+              />
+
+              <InputField
+                id="address"
+                name="Organization's Address"
+                autoComplete="address"
+                type="address"
+                label="Organization Address"
+                isRequired={true}
+                handleChange={(e) => setAddress(e.target.value)}
+                value={address}
+              />
+              <InputField
+                id="INN"
+                name="Organization INN"
+                autoComplete="number"
+                type="number"
+                label="Organization's INN"
+                isRequired={true}
+                handleChange={(e) => setInn(e.target.value)}
+                value={inn}
+              />
             </div>
             <div className="modal-footer">
               <input
                 type="button"
                 className="btn btn-default"
                 data-dismiss="modal"
-                value="Cancel" onClick={toggleEdit}
+                value="Cancel"
+                onClick={toggleEdit}
               />
-              <input type="submit" className="btn btn-primary" value="Save" />
+              <input type="submit" className="btn btn-success" value="Add" />
             </div>
           </form>
         </div>
@@ -55,10 +102,22 @@ function EditModal({ text, children, disabled, className, ...rest }) {
     </div>
   );
 }
-EditModal.defaultProps = {
-  type: "button",
-  disabled: false,
-  text: "Click Me",
-};
 
 export default EditModal;
+
+function InputField({ label, id, isRequired, handleChange, ...otherProps }) {
+  return (
+    <div>
+      <div className="form-group">
+        <label htmlFor={id}>{label}</label>
+        <input
+          id={id}
+          {...otherProps}
+          required={isRequired}
+          onChange={handleChange}
+          className="form-control"
+        />
+      </div>
+    </div>
+  );
+}

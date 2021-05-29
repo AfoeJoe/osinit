@@ -14,12 +14,11 @@ export default function OrganizationPage() {
   const { openAdd, openEdit, openDelete } = useSelector((state) => state.Modal);
   const dispatch = useDispatch();
   const actions = new Actions(dispatch);
-  const actions = new Actions(dispatch);
-  const { organizations, loading } = useSelector((state) => state.Organization);
+  const { organizations, loading,reload } = useSelector((state) => state.Organization);
 
   React.useEffect(() => {
     actions.getOrganizations();
-  }, []);
+  }, [reload]);
   return (
     <div>
       <div className="container ">
@@ -34,8 +33,7 @@ export default function OrganizationPage() {
             className="d-flex btn-primary"
             onClick={actions.toggleAdd}
           >
-            {" "}
-            <i className="material-icons">&#xE147;</i>{" "}
+        <i className="material-icons">&#xE147;</i>{" "}
           </CustomButton>
         </div>
         <div className="table-responsive">

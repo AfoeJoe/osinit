@@ -12,7 +12,11 @@
 export const ActionTypes = {
     LOGIN: 'ACTION_LOGIN',
     LOGOUT: 'ACTION_LOGOUT',
-    CLICK: 'ACTION_CLICK',
+    FETCH_ORG: 'ACTION_FETCH_ORG',
+    CREATE_ORG:'ACTION_CREATE_ORG',
+    EDIT_ORG:'ACTION_EDIT_ORG',
+    DELETE_ORG:'ACTION_DELETE_ORG',
+
 }
 export const ModalActionTypes = {
     EDIT: 'TOGGLE_EDIT',

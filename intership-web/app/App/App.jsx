@@ -13,6 +13,7 @@ import NavBar from "./components/navBar/NavBar";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import DivisionPage from "./pages/divisionPage/DivisionPage";
 import EemployeePage from "./pages/employeePage/EemployeePage";
+import NoMatch from "./pages/noMatch/NoMatch";
 
 /**
  * Пропсы компонента из стора.
@@ -45,31 +46,28 @@ import EemployeePage from "./pages/employeePage/EemployeePage";
  * Основной класс приложения.
  */
 export class App extends React.Component /*<TProps, {}> */ {
-
   render() {
     return (
-        <>
-          <NavBar />
-          {/* A <Switch> looks through its children <Route>s and
+      <>
+        <NavBar />
+        {/* A <Switch> looks through its children <Route>s and
     renders the first one that matches the current URL. */}
-          <Switch>
-            <PrivateRoute path={routes.ORGANIZATION}>
-              <OrganizationPage />
-            </PrivateRoute>
-            <PrivateRoute path={routes.DIVISION}>
-              <DivisionPage />
-            </PrivateRoute>
-            <PrivateRoute path={routes.EMPLOYEES}>
-              <EemployeePage />
-            </PrivateRoute>
-            <Route exact path={routes.HOME}>
-              <LoginPage />
-            </Route>
-            <Route exact path={routes.LOGIN}>
-              <LoginPage />
-            </Route>
-          </Switch>
-        </>
+        <Switch>
+          <PrivateRoute path={routes.ORGANIZATION} comp={OrganizationPage}/>
+          <PrivateRoute exact path={routes.DIVISION} comp={DivisionPage}/>
+          <PrivateRoute path={routes.EMPLOYEES} comp={EemployeePage}/ >
+        
+          <Route exact path={routes.HOME}>
+            <LoginPage />
+          </Route>
+          <Route exact path={routes.LOGIN}>
+            <LoginPage />
+          </Route>
+          <Route path="*">
+            <NoMatch/>
+          </Route>
+        </Switch>
+      </>
     );
   }
 }

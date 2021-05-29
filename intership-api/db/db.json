@@ -6,15 +6,15 @@
   "organization": [
     {
       "id": 1,
-      "name": "Organization 1",
-      "address": "1 street",
-      "INN": 1234567890
+      "name": "Joshua Okunola",
+      "address": "2-ya yugozapagnaya 26a",
+      "INN": 1234356789
     },
     {
       "id": 2,
-      "name": "org 2",
-      "address": "kirov",
-      "INN": 123124123
+      "name": "Joshua Okunola",
+      "address": "2-ya yugozapagnaya 26a",
+      "INN": 234567890
     }
   ],
   "division": [

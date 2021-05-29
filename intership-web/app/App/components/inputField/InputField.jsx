@@ -1,6 +1,6 @@
 import * as React from "react";
 
-function InputField({label,id,handleChange,...otherProps}) {
+function InputField({label,id,isRequired,handleChange,...otherProps}) {
   return (
     <div>
       <label htmlFor={id} className="sr-only">
@@ -10,7 +10,7 @@ function InputField({label,id,handleChange,...otherProps}) {
         id={id}
         className="form-control"
         {...otherProps}
-        required
+        required={isRequired}
          onChange={handleChange}
       />
     </div>
@@ -22,6 +22,7 @@ InputField.defaultProps = {
   type:"text",
   placeholder:"Fill in this form",
   label:'Name',
+  isRequired:false
 };
 
 export default InputField;

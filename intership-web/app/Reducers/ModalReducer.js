@@ -6,6 +6,7 @@ const initialState = {
       openEdit: false,
       openDelete: false,
       openAdd: false,
+      editData:null
     };
   },
 };
@@ -20,11 +21,14 @@ export default function reducer(state = initialState.state, action) {
       return {
         ...state,
         openEdit: !state.openEdit,
+        editData:action.payload
       };
     case `${ModalActionTypes.DELETE}`:
       return {
         ...state,
         openDelete: !state.openDelete,
+        deleteData:action.payload
+
       };
   }
   return state;
