@@ -25,10 +25,19 @@ export class Actions {
     await fetch("http://127.0.0.1:8080/authorize", options)
       .then((response) => {
         if (response.status === 200) {
+          return response.json();
+          
+        } else {
+          throw "error";
+        }
+      }).then(response=>{
+        console.log(response.isLogin);
+
+        if (response.isLogin) {
           this.dispatch({
             type: `${ActionTypes.LOGIN}${AsyncActionTypes.SUCCESS}`,
           });
-        } else {
+        }else {
           throw "error";
         }
       })

@@ -4,7 +4,8 @@ const initialState = {
     get state(){
         return {
             loginStatus:false,
-            loading:false
+            loading:false,
+            error:''
         }
     }
 }
@@ -24,6 +25,7 @@ export default function reducer(state = initialState.state,action){
             return {
                 loading: false,
                 loginStatus: false,
+                error:action.payload
             };
         case ActionTypes.LOGOUT:
             return {

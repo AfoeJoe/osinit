@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
           routes.ORGANIZATION;
         this.props.history.push(from);
       }
-    });
+    })
     e.preventDefault();
   }
   handleChange(e) {
@@ -67,6 +67,11 @@ class LoginPage extends React.Component {
               handleChange={this.handleChange}
               value={this.state.password}
             />
+             {this.props.error && (
+              <div className="alert alert-danger" role="alert">
+                {this.props.error}{" Please, provide login details"}
+              </div>
+            )}
             <div className="checkbox mb-3">
               <label>
                 <input type="checkbox" value="remember-me" /> Remember me
@@ -92,6 +97,7 @@ function mapStateToProps(state) {
   return {
     loginStatus: state.Auth.loginStatus,
     waitingForLogin: state.Auth.loading,
+    error:state.Auth.error
   };
 }
 function mapDispatchToProps(dispatch) {
