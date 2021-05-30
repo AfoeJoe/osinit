@@ -3,17 +3,20 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Actions } from "../../../Actions/Actions";
 import "./table.css";
+import {routes} from '../../utils/constants'
 
-export default function Table({ organizations }) {
-  if (organizations.length ===0) {
+export default function Table({ data,currentPage }) {
+  console.log(data);
+  if (data.length ===0) {
     return <h1>No records!</h1>
   }
-  const headingList =  Object.keys(organizations[0]);
+  const headingList =  Object.keys(data[0]);
+  const link = (currentPage=='organization')?routes.DIVISION:(currentPage=='division')? routes.EMPLOYEES:'';
   const dispatch = useDispatch();
   const actions = new Actions(dispatch);
   const rowData =
-    organizations.map((row, index) => (
-      <RowData key={row.id} row={row} actions={actions} />
+    data.map((row, index) => (
+      <RowData key={row.id} id={row.id} row={row} actions={actions} link={link} headingList={headingList}/>
     ));
   return (
     <table className="table table-hover">
@@ -41,31 +44,27 @@ function Thead(props) {
   );
 }
 
-function RowData(props) {
-  const { id, name, address, INN } = props.row;
+function RowData({link,row,id,actions,headingList}) {
+const formedData = headingList.map((el,i)=><td key={i}>{row[el]}</td>)
 
   return (
   
     <tr>
-      <th scope="row">{id}</th>
-
-      <td>{name}</td>
-      <td>{address}</td>
-      <td>{INN}</td>
+      
+      {formedData}
       <td>
       <span
           className="text-primary pointer"
           
         >
-          {" "}
-         <Link to={`divisions/${id}`}> <i className="material-icons" data-toggle="tooltip" title="подробнее">
+         {link &&<Link to={`${link}/:${id}`}> <i className="material-icons" data-toggle="tooltip" title="подробнее">
             &#xe5da;
-          </i></Link>
+          </i></Link>}
         </span>
         <span
           className="text-primary pointer"
           data-toggle="modal"
-          onClick={() => props.actions.toggleEdit(props.row)}
+          onClick={() => actions.toggleEdit(row)}
         >
           {" "}
           <i className="material-icons" data-toggle="tooltip" title="Edit">
@@ -75,7 +74,7 @@ function RowData(props) {
         <span
           className="text-primary pointer"
           data-toggle="modal"
-          onClick={() => props.actions.toggleDelete(props.row)}
+          onClick={() => actions.toggleDelete(row)}
         >
           {" "}
           <i className="material-icons" data-toggle="tooltip" title="Delete">

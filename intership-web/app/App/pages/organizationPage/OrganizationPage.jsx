@@ -8,10 +8,8 @@ import DeleteModal from "../../components/deleteModal/DeleteModal";
 import { Actions } from "../../../Actions/Actions";
 
 export default function OrganizationPage() {
-  const [openAdd, setOpenEdit] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
-  const [openEdit, setOpenEdit] = React.useState(false);
-  const { openAdd, openEdit, openDelete } = useSelector((state) => state.Modal);
+  const { openEdit, openDelete } = useSelector((state) => state.Modal);
   const dispatch = useDispatch();
   const actions = new Actions(dispatch);
   const { organizations, loading,reload } = useSelector((state) => state.Organization);
@@ -38,10 +36,10 @@ export default function OrganizationPage() {
         </div>
         <div className="table-responsive">
           {loading && "loading..."}
-          {organizations && <Table organizations={organizations} />}
+          {organizations && <Table data={organizations} currentPage='organization'/>}
         </div>
         {/*<!-- Add Modal HTML */}
-        {openEdit && <EditModal setOpenEdit={setOpenEdit} />}
+        {openEdit && <EditModal />}
         {/* Edit Modal HTM*/}
         {openEdit && <EditModal />}
 

@@ -6,6 +6,7 @@ import ExampleReducer /*, { IExample } */ from "./ExampleReducer";
 import AuthReducer from './AuthReducer'
 import ModalReducer from './ModalReducer'
 import OrganizationReducer from './OrganizationReducer'
+import DivisionReducer from './DivisionReducer'
 
 /**
  * @interface
@@ -27,8 +28,8 @@ const createRootReducer = (history /*: History*/) =>
       Example: ExampleReducer,
       Auth: AuthReducer,
       Modal:ModalReducer,
-      Organization:OrganizationReducer
-
+      Organization:OrganizationReducer,
+      Division:DivisionReducer
     }
   );
 

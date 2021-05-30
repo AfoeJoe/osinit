@@ -16,6 +16,9 @@ export const ActionTypes = {
     CREATE_ORG:'ACTION_CREATE_ORG',
     EDIT_ORG:'ACTION_EDIT_ORG',
     DELETE_ORG:'ACTION_DELETE_ORG',
+    CREATE_DIV:'ACTION_CREATE_DIV',
+    EDIT_DIV:'ACTION_EDIT_DIV',
+    DELETE_DIV:'ACTION_DELETE_DIV',
 
 }
 export const ModalActionTypes = {

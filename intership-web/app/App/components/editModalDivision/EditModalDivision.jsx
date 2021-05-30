@@ -4,13 +4,13 @@ import { Actions } from "../../../Actions/Actions";
 
 function EditModal({ setOpenEdit, ...rest }) {
   const dispatch = useDispatch();
-  const { toggleEdit, editOrganization, createOrganization } = new Actions(
+  const { toggleEdit, editDivision, createDivision } = new Actions(
     dispatch
   );
   const { editData } = useSelector((state) => state.Modal);
   const [name, setName] = React.useState(editData.name || "");
-  const [address, setAddress] = React.useState(editData.address || "");
-  const [inn, setInn] = React.useState(editData.INN || 0);
+  const [id_organization, setIdOrganization] = React.useState(editData.id_organization || "");
+  const [phone, setPhone] = React.useState(editData.phone || 0);
   const [error, setError] = React.useState("");
   const isAdd = editData.name ? false : true;
   const handleSubmit = (e) => {
@@ -20,7 +20,7 @@ function EditModal({ setOpenEdit, ...rest }) {
       return;
     }
    
-    createOrganization({ name, address, INN: inn , id: editData.id||null});
+    createDivision({ name, id_organization, phone , id: editData.id||null});
     toggleEdit();
   };
   return (
@@ -30,7 +30,7 @@ function EditModal({ setOpenEdit, ...rest }) {
           <form onSubmit={handleSubmit}>
             <div className="modal-header">
               <h4 className="modal-title">
-                {isAdd ? "Add" : "Edit"} Organization'
+                {isAdd ? "Add" : "Edit"} Division'
               </h4>
               <button
                 type="button"
@@ -49,35 +49,35 @@ function EditModal({ setOpenEdit, ...rest }) {
             )}
             <div className="modal-body">
               <InputField
-                id="orgName"
-                name="Organization Name"
+                id="divName"
+                name="Division Name"
                 autoComplete="name"
                 type="text"
-                label="Organization Name"
+                label="Division Name"
                 isRequired={true}
                 handleChange={(e) => setName(e.target.value)}
                 value={name}
               />
 
               <InputField
-                id="address"
-                name="Organization's Address"
-                autoComplete="address"
-                type="address"
-                label="Organization Address"
+                id="id_organization"
+                name="Organization's id"
+                autoComplete="id"
+                type="number"
+                label="Organization's id"
                 isRequired={true}
-                handleChange={(e) => setAddress(e.target.value)}
-                value={address}
+                handleChange={(e) => setIdOrganization(e.target.value)}
+                value={id_organization}
               />
               <InputField
-                id="INN"
-                name="Organization INN"
-                autoComplete="number"
-                type="number"
-                label="Organization's INN"
+                id="Phone"
+                name="Division Phone"
+                autoComplete="tel"
+                type="tel"
+                label="Division's Phone"
                 isRequired={true}
-                handleChange={(e) => setInn(e.target.value)}
-                value={inn}
+                handleChange={(e) => setPhone(e.target.value)}
+                value={phone}
               />
             </div>
             <div className="modal-footer">
