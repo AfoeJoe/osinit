@@ -28,19 +28,31 @@
       "id": 1,
       "id_organization": 1,
       "name": "Division 1",
-      "phone": 1234
+      "phone": "12345"
     },
     {
-      "id": 2,
+      "id": 4,
+      "id_organization": 4,
+      "name": "Joshua Okunola",
+      "phone": "+79270434722"
+    },
+    {
+      "id": 5,
       "id_organization": 1,
-      "name": "Division 2",
-      "phone": 2134
+      "name": "Kazan State Power Engineering University",
+      "phone": "89270434722"
     },
     {
-      "id": 3,
+      "id": 6,
       "id_organization": 2,
-      "name": "div2",
-      "phone": 2324242
+      "name": "Joshua Okunola",
+      "phone": "+79270434722"
+    },
+    {
+      "id": 5,
+      "id_organization": 3,
+      "name": "Joshua Okunola",
+      "phone": "+79270434722"
     }
   ],
   "employee": [

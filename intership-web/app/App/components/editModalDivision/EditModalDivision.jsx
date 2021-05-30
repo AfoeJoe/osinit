@@ -2,20 +2,20 @@ import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../Actions/Actions";
 
-function EditModal({ setOpenEdit, ...rest }) {
+function EditModalDivision({ id_organization}) {
   const dispatch = useDispatch();
   const { toggleEdit, editDivision, createDivision } = new Actions(
     dispatch
   );
   const { editData } = useSelector((state) => state.Modal);
   const [name, setName] = React.useState(editData.name || "");
-  const [id_organization, setIdOrganization] = React.useState(editData.id_organization || "");
+  // const [id_organization, setIdOrganization] = React.useState(editData.id_organization || "");
   const [phone, setPhone] = React.useState(editData.phone || 0);
   const [error, setError] = React.useState("");
   const isAdd = editData.name ? false : true;
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !address || inn.toString().length != 10) {
+    if (!name || !phone || !id_organization) {
       setError("Please,Provide valid details!");
       return;
     }
@@ -58,17 +58,6 @@ function EditModal({ setOpenEdit, ...rest }) {
                 handleChange={(e) => setName(e.target.value)}
                 value={name}
               />
-
-              <InputField
-                id="id_organization"
-                name="Organization's id"
-                autoComplete="id"
-                type="number"
-                label="Organization's id"
-                isRequired={true}
-                handleChange={(e) => setIdOrganization(e.target.value)}
-                value={id_organization}
-              />
               <InputField
                 id="Phone"
                 name="Division Phone"
@@ -101,7 +90,7 @@ function EditModal({ setOpenEdit, ...rest }) {
   );
 }
 
-export default EditModal;
+export default EditModalDivision;
 
 function InputField({ label, id, isRequired, handleChange, ...otherProps }) {
   return (

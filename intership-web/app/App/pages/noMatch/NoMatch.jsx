@@ -1,19 +1,13 @@
 import * as React from "react";
 import { withRouter} from "react-router-dom";
-import CustomButton from "../../components/customButton/CustomButton";
+import BackButton from "../../components/backButton/BackButton";
 
 function NoMatch(props) {
   return (
     <div className="container">
       <div className="d-flex flex-row justify-content-between my-2">
-        <CustomButton
-          onClick={() => props.history.goBack()}
-          text="Back"
-          className="d-flex btn-primary"
-        >
-          {" "}
-          <i className="material-icons arrow-back">&#xe5c4;</i>{" "}
-        </CustomButton>
+      <BackButton history={props.history} />
+
       </div>
       <div className="row">
         <div className="col-md-12">

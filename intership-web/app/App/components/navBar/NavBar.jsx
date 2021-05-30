@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { routes } from "../../utils/constants";
 import { Actions } from "../../../Actions/Actions";
 import Logo from "../../resources/Logo.png";
-import './navBar.css'
+import "./navBar.css";
 
 function Navbar(props) {
   const { loginStatus, actions } = props;
@@ -12,23 +12,22 @@ function Navbar(props) {
     <>
       {loginStatus && (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary justify-content-between">
-            <img
-              src={Logo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top mr-2"
-              alt=""
-            />
-              <NavLink className="nav-item" to={routes.ORGANIZATION}>
-              
-                Organizations
-              </NavLink>
-              <NavLink className="nav-item" to='/divisions/'>
-                Division
-              </NavLink>
-              <NavLink className="nav-item" to={routes.EMPLOYEES}>
-                Employee
-              </NavLink>
+          <img
+            src={Logo}
+            width="30"
+            height="30"
+            className="d-inline-block align-top mr-2"
+            alt=""
+          />
+          <NavLink className="nav-item" to={routes.ORGANIZATION}>
+            Organizations
+          </NavLink>
+          <NavLink className="nav-item" to="/divisions/">
+            Division
+          </NavLink>
+          <NavLink className="nav-item" to="/employees/">
+            Employee
+          </NavLink>
           <button
             onClick={actions.onLogout}
             className="btn btn-light my-2 my-sm-0"

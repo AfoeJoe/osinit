@@ -11,7 +11,7 @@ export default function Table({ data,currentPage }) {
     return <h1>No records!</h1>
   }
   const headingList =  Object.keys(data[0]);
-  const link = (currentPage=='organization')?routes.DIVISION:(currentPage=='division')? routes.EMPLOYEES:'';
+  const link = (currentPage=='organization')?'/divisions/':(currentPage=='division')? '/employees/':'';
   const dispatch = useDispatch();
   const actions = new Actions(dispatch);
   const rowData =
@@ -57,7 +57,7 @@ const formedData = headingList.map((el,i)=><td key={i}>{row[el]}</td>)
           className="text-primary pointer"
           
         >
-         {link &&<Link to={`${link}/:${id}`}> <i className="material-icons" data-toggle="tooltip" title="подробнее">
+         {link &&<Link to={`${link}${id}`}> <i className="material-icons" data-toggle="tooltip" title="подробнее">
             &#xe5da;
           </i></Link>}
         </span>

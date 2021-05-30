@@ -8,7 +8,7 @@ function PrivateRoute({ comp: Component, loginStatus, ...rest }) {
     <Route
       {...rest}
       render={(props) =>
-        true ? (
+        loginStatus ? (
           <Component {...props} />
         ) : (
           <Redirect

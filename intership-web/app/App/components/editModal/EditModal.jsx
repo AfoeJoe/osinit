@@ -2,7 +2,7 @@ import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../Actions/Actions";
 
-function EditModal({ setOpenEdit, ...rest }) {
+function EditModal(props) {
   const dispatch = useDispatch();
   const { toggleEdit, editOrganization, createOrganization } = new Actions(
     dispatch

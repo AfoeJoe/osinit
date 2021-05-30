@@ -56,6 +56,8 @@ class LoginPage extends React.Component {
     this.setState({ [name]: value });
   }
   render() {
+    let {loginStatus,waitingForLogin,error} = this.props;
+    const {password,stateError,username} = this.state; 
     return (
       <div className="text-center">
         <div className="sign-in-body">
@@ -70,7 +72,7 @@ class LoginPage extends React.Component {
               type="text"
               label="User Name"
               handleChange={this.handleChange}
-              value={this.state.username}
+              value={username}
             />
             <InputField
               id="inputPassword"
@@ -80,12 +82,12 @@ class LoginPage extends React.Component {
               type="password"
               label="Password"
               handleChange={this.handleChange}
-              value={this.state.password}
+              value={password}
             />
-            {(this.props.error || this.state.stateError) && (
+            {(error || stateError) && (
               <div className="alert alert-danger" role="alert">
-                {typeof this.props.error !== "object" &&
-                 this.props.error}
+                {typeof error !== "object" &&
+                 error}
                 {" try again"}
               </div>
             )}
@@ -99,7 +101,7 @@ class LoginPage extends React.Component {
               type="submit"
               text="Sign In"
               className={`btn-primary btn-lg  btn-block`}
-              disabled={this.props.waitingForLogin}
+              disabled={waitingForLogin || loginStatus}
             />
 
             <p className="mt-5 mb-3 text-muted">&copy; 2020-2021</p>

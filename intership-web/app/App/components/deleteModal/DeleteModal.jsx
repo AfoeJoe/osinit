@@ -1,17 +1,21 @@
 import * as React from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../Actions/Actions";
 
-function DeleteModal({ text, children, disabled, className, ...rest }) {
+function DeleteModal({ currentPage }) {
   const dispatch = useDispatch();
-  const { toggleDelete,deleteOrganization} = new Actions(dispatch);
+  const { toggleDelete, deleteOrganization, deleteDivision } = new Actions(
+    dispatch
+  );
   const { deleteData } = useSelector((state) => state.Modal);
   const handleSubmit = (e) => {
     e.preventDefault();
-    deleteOrganization(deleteData.id)
+    currentPage === "organization"
+      ? deleteOrganization(deleteData.id)
+      : deleteDivision(deleteData.id);
     // .then(res=>console.log(res)
     // )
-     toggleDelete();
+    toggleDelete();
   };
   return (
     <div id="deleteEmployeeModal" className="modal fade show">
@@ -19,19 +23,25 @@ function DeleteModal({ text, children, disabled, className, ...rest }) {
         <div className="modal-content">
           <form onSubmit={handleSubmit}>
             <div className="modal-header">
-              <h4 className="modal-title">Delete Organization</h4>
+              <h4 className="modal-title">
+                Delete{" "}
+                {currentPage === "organization" ? "Organization" : "division"}
+              </h4>
               <button
                 type="button"
                 className="close"
                 data-dismiss="modal"
-                aria-hidden="true" onClick={toggleDelete}
+                aria-hidden="true"
+                onClick={toggleDelete}
               >
                 &times;
               </button>
             </div>
             <div className="modal-body">
-              
-              <p>Are you sure you want to delete {deleteData.name} with id of {deleteData.id}?</p>
+              <p>
+                Are you sure you want to delete {deleteData.name} with id of{" "}
+                {deleteData.id}?
+              </p>
               <p className="text-warning">
                 <small>This action cannot be undone.</small>
               </p>
@@ -41,7 +51,8 @@ function DeleteModal({ text, children, disabled, className, ...rest }) {
                 type="button"
                 className="btn btn-default"
                 data-dismiss="modal"
-                value="Cancel" onClick={toggleDelete}
+                value="Cancel"
+                onClick={toggleDelete}
               />
               <input type="submit" className="btn btn-danger" value="Delete" />
             </div>
