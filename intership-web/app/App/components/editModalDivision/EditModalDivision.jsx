@@ -2,11 +2,9 @@ import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../Actions/Actions";
 
-function EditModalDivision({ id_organization}) {
+function EditModalDivision({ id_organization }) {
   const dispatch = useDispatch();
-  const { toggleEdit, editDivision, createDivision } = new Actions(
-    dispatch
-  );
+  const { toggleEdit, createDivision } = new Actions(dispatch);
   const { editData } = useSelector((state) => state.Modal);
   const [name, setName] = React.useState(editData.name || "");
   // const [id_organization, setIdOrganization] = React.useState(editData.id_organization || "");
@@ -19,8 +17,8 @@ function EditModalDivision({ id_organization}) {
       setError("Please,Provide valid details!");
       return;
     }
-   
-    createDivision({ name, id_organization, phone , id: editData.id||null});
+
+    createDivision({ name, id_organization, phone, id: editData.id || null });
     toggleEdit();
   };
   return (
@@ -29,9 +27,7 @@ function EditModalDivision({ id_organization}) {
         <div className="modal-content">
           <form onSubmit={handleSubmit}>
             <div className="modal-header">
-              <h4 className="modal-title">
-                {isAdd ? "Add" : "Edit"} Division'
-              </h4>
+              <h4 className="modal-title">{isAdd ? "Add" : "Edit"} Division</h4>
               <button
                 type="button"
                 className="close"

@@ -4,18 +4,23 @@ import { Actions } from "../../../Actions/Actions";
 
 function DeleteModal({ currentPage }) {
   const dispatch = useDispatch();
-  const { toggleDelete, deleteOrganization, deleteDivision } = new Actions(
-    dispatch
-  );
+  const { toggleDelete, deleteOrganization, deleteDivision, deleteEmployee } =
+    new Actions(dispatch);
   const { deleteData } = useSelector((state) => state.Modal);
+  const [stateError, setStateError] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    currentPage === "organization"
-      ? deleteOrganization(deleteData.id)
-      : deleteDivision(deleteData.id);
-    // .then(res=>console.log(res)
-    // )
-    toggleDelete();
+    const result =
+      currentPage === "organization"
+        ? deleteOrganization(deleteData.id)
+        : currentPage === "division"
+        ? deleteDivision(deleteData.id)
+        : deleteEmployee(deleteData.id);
+    result
+      .then((res) => {
+        toggleDelete();
+      })
+      .catch((error) => setStateError(error));
   };
   return (
     <div id="deleteEmployeeModal" className="modal fade show">
@@ -25,7 +30,11 @@ function DeleteModal({ currentPage }) {
             <div className="modal-header">
               <h4 className="modal-title">
                 Delete{" "}
-                {currentPage === "organization" ? "Organization" : "division"}
+                {currentPage === "organization"
+                  ? "Organization"
+                  : currentPage === "division"
+                  ? "division"
+                  : "employee"}
               </h4>
               <button
                 type="button"
@@ -39,8 +48,11 @@ function DeleteModal({ currentPage }) {
             </div>
             <div className="modal-body">
               <p>
-                Are you sure you want to delete {deleteData.name} with id of{" "}
-                {deleteData.id}?
+                Are you sure you want to delete record
+                {Object.keys(deleteData).map(
+                  (element) => ` ${element} of ${deleteData[element]}\n`
+                )}
+                ?
               </p>
               <p className="text-warning">
                 <small>This action cannot be undone.</small>
@@ -54,6 +66,11 @@ function DeleteModal({ currentPage }) {
                 value="Cancel"
                 onClick={toggleDelete}
               />
+              {stateError && (
+                <div className="alert alert-danger" role="alert">
+                  {stateError}
+                </div>
+              )}
               <input type="submit" className="btn btn-danger" value="Delete" />
             </div>
           </form>

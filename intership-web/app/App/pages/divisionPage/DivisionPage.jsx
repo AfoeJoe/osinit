@@ -9,7 +9,6 @@ import { Actions } from "../../../Actions/Actions";
 import EditModalDivision from "../../components/editModalDivision/EditModalDivision";
 
 export default function DivisionPage(props) {
-  const [openDelete, setOpenDelete] = React.useState(false);
   const { openEdit, openDelete } = useSelector((state) => state.Modal);
   const dispatch = useDispatch();
   const actions = new Actions(dispatch);

@@ -26,20 +26,19 @@ export class Actions {
       .then((response) => {
         if (response.status === 200) {
           return response.json();
-          
         } else {
           throw "server error";
         }
-      }).then(response=>{
-
+      })
+      .then((response) => {
         if (response.isLogin) {
           this.dispatch({
             type: `${ActionTypes.LOGIN}${AsyncActionTypes.SUCCESS}`,
           });
-        }else {
+        } else {
           throw "login details errors";
         }
-        return response.isLogin
+        return response.isLogin;
       })
       .catch((error) => {
         this.dispatch({
@@ -67,12 +66,17 @@ export class Actions {
   };
 
   /*MODAL ACTIONS*/
-  toggleEdit = (data={}) => {this.dispatch({ type: ModalActionTypes.EDIT,payload:data })};
-  toggleDelete = (data) => this.dispatch({ type: ModalActionTypes.DELETE,payload:data });
+  toggleEdit = (data = {}) => {
+    this.dispatch({ type: ModalActionTypes.EDIT, payload: data });
+  };
+  toggleDelete = (data) =>
+    this.dispatch({ type: ModalActionTypes.DELETE, payload: data });
 
   /*ORGANIZATION ACTIONS*/
   getOrganizations = async () => {
-    this.dispatch({ type: `${ActionTypes.FETCH_ORG}${AsyncActionTypes.BEGIN}` });
+    this.dispatch({
+      type: `${ActionTypes.FETCH_ORG}${AsyncActionTypes.BEGIN}`,
+    });
     const options = {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -82,11 +86,12 @@ export class Actions {
     await fetch("http://127.0.0.1:8080/organization", options)
       .then((response) => {
         if (response.status !== 200) throw "error";
-        response.json().then(data => {
+        response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes.FETCH_ORG}${AsyncActionTypes.SUCCESS}`,
             payload: data,
           });
+          return data;
         });
       })
       .catch((error) => {
@@ -97,8 +102,15 @@ export class Actions {
       });
   };
   createOrganization = async (orgData) => {
-    if (orgData.id) {const keyWord='EDIT_ORG';const method="PUT";const url = `http://127.0.0.1:8080/organization/?id=${orgData.id}`}
-    else {const keyWord='CREATE_ORG';const method="POST";  const url=`http://127.0.0.1:8080/organization`}
+    if (orgData.id) {
+      const keyWord = "EDIT_ORG";
+      const method = "PUT";
+      const url = `http://127.0.0.1:8080/organization/?id=${orgData.id}`;
+    } else {
+      const keyWord = "CREATE_ORG";
+      const method = "POST";
+      const url = `http://127.0.0.1:8080/organization`;
+    }
     this.dispatch({ type: `${ActionTypes[keyWord]}${AsyncActionTypes.BEGIN}` });
     const options = {
       method: method,
@@ -107,11 +119,11 @@ export class Actions {
       },
       body: JSON.stringify(orgData),
     };
-    
+
     await fetch(url, options)
       .then((response) => {
         if (response.status !== 200) throw "error";
-        response.json().then(data => {
+        response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes[keyWord]}${AsyncActionTypes.SUCCESS}`,
             payload: data,
@@ -126,35 +138,11 @@ export class Actions {
         });
       });
   };
-  // editOrganization = async (orgData) => {
-  //   this.dispatch({ type: `${ActionTypes.EDIT_ORG}${AsyncActionTypes.BEGIN}` });
-  //   const options = {
-  //     method: "PUT",
-  //     headers: {
-  //       "Content-Type": "application/json;charset=utf-8",
-  //     },
-  //     body: JSON.stringify(orgData),
-  //   };
-  //   await fetch(`http://127.0.0.1:8080/organization/?id=${orgData.id}`, options)
-  //     .then((response) => {
-  //       if (response.status !== 200) throw "error";
-  //       response.json().then(data => {
-  //         this.dispatch({
-  //           type: `${ActionTypes.EDIT_ORG}${AsyncActionTypes.SUCCESS}`,
-  //           payload: data,
-  //         });
-  //         return data;
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       this.dispatch({
-  //         type: `${ActionTypes.EDIT_ORG}${AsyncActionTypes.FAILURE}`,
-  //         payload: error,
-  //       });
-  //     });
-  // };
+
   deleteOrganization = async (id) => {
-    this.dispatch({ type: `${ActionTypes.DELETE_ORG}${AsyncActionTypes.BEGIN}` });
+    this.dispatch({
+      type: `${ActionTypes.DELETE_ORG}${AsyncActionTypes.BEGIN}`,
+    });
     const options = {
       method: "DELETE",
       headers: {
@@ -164,7 +152,7 @@ export class Actions {
     await fetch(`http://127.0.0.1:8080/organization/?id=${id}`, options)
       .then((response) => {
         if (response.status !== 200) throw "error";
-        response.json().then(data => {
+        response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes.DELETE_ORG}${AsyncActionTypes.SUCCESS}`,
             payload: data,
@@ -180,16 +168,17 @@ export class Actions {
       });
   };
 
-
   /*DIVISION ACTIONS*/
-  getDivisions = async (id=0) => {
+  getDivisions = async (id = 0) => {
     if (!id) {
-     return this.dispatch({
+      return this.dispatch({
         type: `${ActionTypes.FETCH_DIV}${AsyncActionTypes.FAILURE}`,
-        payload: 'Error,No ID passed!',
+        payload: "Error,No ID passed!",
       });
     }
-    this.dispatch({ type: `${ActionTypes.FETCH_DIV}${AsyncActionTypes.BEGIN}` });
+    this.dispatch({
+      type: `${ActionTypes.FETCH_DIV}${AsyncActionTypes.BEGIN}`,
+    });
     const options = {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -199,11 +188,12 @@ export class Actions {
     await fetch(`http://127.0.0.1:8080/division/?id=${id}`, options)
       .then((response) => {
         if (response.status !== 200) throw "error";
-        response.json().then(data => {
+        response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes.FETCH_DIV}${AsyncActionTypes.SUCCESS}`,
             payload: data,
           });
+          return data;
         });
       })
       .catch((error) => {
@@ -215,8 +205,15 @@ export class Actions {
   };
 
   createDivision = async (divData) => {
-    if (divData.id) {const keyWord='EDIT_DIV';const method="PUT";const url = `http://127.0.0.1:8080/division/?id=${divData.id}`}
-    else {const keyWord='CREATE_DIV';const method="POST";  const url=`http://127.0.0.1:8080/division`}
+    if (divData.id) {
+      const keyWord = "EDIT_DIV";
+      const method = "PUT";
+      const url = `http://127.0.0.1:8080/division/?id=${divData.id}`;
+    } else {
+      const keyWord = "CREATE_DIV";
+      const method = "POST";
+      const url = `http://127.0.0.1:8080/division`;
+    }
     this.dispatch({ type: `${ActionTypes[keyWord]}${AsyncActionTypes.BEGIN}` });
     const options = {
       method: method,
@@ -225,11 +222,11 @@ export class Actions {
       },
       body: JSON.stringify(divData),
     };
-    
+
     await fetch(url, options)
       .then((response) => {
         if (response.status !== 200) throw "error";
-        response.json().then(data => {
+        response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes[keyWord]}${AsyncActionTypes.SUCCESS}`,
             payload: data,
@@ -245,7 +242,9 @@ export class Actions {
       });
   };
   deleteDivision = async (id) => {
-    this.dispatch({ type: `${ActionTypes.DELETE_DIV}${AsyncActionTypes.BEGIN}` });
+    this.dispatch({
+      type: `${ActionTypes.DELETE_DIV}${AsyncActionTypes.BEGIN}`,
+    });
     const options = {
       method: "DELETE",
       headers: {
@@ -255,7 +254,7 @@ export class Actions {
     await fetch(`http://127.0.0.1:8080/division/?id=${id}`, options)
       .then((response) => {
         if (response.status !== 200) throw "error";
-        response.json().then(data => {
+        response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes.DELETE_DIV}${AsyncActionTypes.SUCCESS}`,
             payload: data,
@@ -266,6 +265,107 @@ export class Actions {
       .catch((error) => {
         this.dispatch({
           type: `${ActionTypes.DELETE_DIV}${AsyncActionTypes.FAILURE}`,
+          payload: error,
+        });
+      });
+  };
+
+  /*EMPLOYEE ACTIONS*/
+  getEmployees = async (id_divsion = 0) => {
+    if (!id_divsion) {
+      return this.dispatch({
+        type: `${ActionTypes.FETCH_EMPLOYEES}${AsyncActionTypes.FAILURE}`,
+        payload: "Error,No ID passed!",
+      });
+    }
+    this.dispatch({
+      type: `${ActionTypes.FETCH_EMPLOYEES}${AsyncActionTypes.BEGIN}`,
+    });
+    const options = {
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    };
+
+    await fetch(`http://127.0.0.1:8080/employee/?id=${id_divsion}`, options)
+      .then((response) => {
+        if (response.status !== 200) throw "error";
+        response.json().then((data) => {
+          this.dispatch({
+            type: `${ActionTypes.FETCH_EMPLOYEES}${AsyncActionTypes.SUCCESS}`,
+            payload: data,
+          });
+          return data;
+        });
+      })
+      .catch((error) => {
+        this.dispatch({
+          type: `${ActionTypes.FETCH_EMPLOYEES}${AsyncActionTypes.FAILURE}`,
+          payload: error,
+        });
+      });
+  };
+
+  createEmployee = async (empData) => {
+    if (empData.id) {
+      const keyWord = "EDIT_EMPLOYEE";
+      const method = "PUT";
+      const url = `http://127.0.0.1:8080/employee/?id=${empData.id}`;
+    } else {
+      const keyWord = "CREATE_EMPLOYEE";
+      const method = "POST";
+      const url = `http://127.0.0.1:8080/employee`;
+    }
+    this.dispatch({ type: `${ActionTypes[keyWord]}${AsyncActionTypes.BEGIN}` });
+    const options = {
+      method: method,
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(empData),
+    };
+
+    await fetch(url, options)
+      .then((response) => {
+        if (response.status !== 200) throw "error";
+        response.json().then((data) => {
+          this.dispatch({
+            type: `${ActionTypes[keyWord]}${AsyncActionTypes.SUCCESS}`,
+            payload: data,
+          });
+          return data;
+        });
+      })
+      .catch((error) => {
+        this.dispatch({
+          type: `${ActionTypes[keyWord]}${AsyncActionTypes.FAILURE}`,
+          payload: error,
+        });
+      });
+  };
+  deleteEmployee = async (id) => {
+    this.dispatch({
+      type: `${ActionTypes.DELETE_EMPLOYEE}${AsyncActionTypes.BEGIN}`,
+    });
+    const options = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    };
+    await fetch(`http://127.0.0.1:8080/employee/?id=${id}`, options)
+      .then((response) => {
+        if (response.status !== 200) throw "error";
+        response.json().then((data) => {
+          this.dispatch({
+            type: `${ActionTypes.DELETE_EMPLOYEE}${AsyncActionTypes.SUCCESS}`,
+          });
+          return data;
+        });
+      })
+      .catch((error) => {
+        this.dispatch({
+          type: `${ActionTypes.DELETE_EMPLOYEE}${AsyncActionTypes.FAILURE}`,
           payload: error,
         });
       });

@@ -2,34 +2,38 @@ import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../Actions/Actions";
 
-function EditModal(props) {
+function EditModalEmployee({ id_division }) {
   const dispatch = useDispatch();
-  const { toggleEdit, createOrganization } = new Actions(dispatch);
+  const { toggleEdit, createEmployee } = new Actions(dispatch);
   const { editData } = useSelector((state) => state.Modal);
-  const [name, setName] = React.useState(editData.name || "");
+  const [name, setName] = React.useState(editData.FIO || "");
   const [address, setAddress] = React.useState(editData.address || "");
-  const [inn, setInn] = React.useState(editData.INN || 0);
+  const [position, setPosition] = React.useState(editData.position || "");
   const [error, setError] = React.useState("");
-  const isAdd = editData.name ? false : true;
+  const isAdd = editData.id ? false : true;
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !address || inn.toString().length != 10) {
-      setError("Please,Provide valid details!");
+    if (!name || !position || !id_division) {
+      setError("Please,None of those fields can be left empty!");
       return;
     }
-    createOrganization({ name, address, INN: inn, id: editData.id || null });
+    createEmployee({
+      FIO: name,
+      id_division,
+      position,
+      address,
+      id: editData.id || null,
+    });
     toggleEdit();
   };
-
+  console.log(editData);
   return (
     <div id="addEmployeeModal" className="modal fade show">
       <div className="modal-dialog">
         <div className="modal-content">
           <form onSubmit={handleSubmit}>
             <div className="modal-header">
-              <h4 className="modal-title">
-                {isAdd ? "Add" : "Edit"} Organization
-              </h4>
+              <h4 className="modal-title">{isAdd ? "Add" : "Edit"} Employee</h4>
               <button
                 type="button"
                 className="close"
@@ -47,34 +51,34 @@ function EditModal(props) {
             )}
             <div className="modal-body">
               <InputField
-                id="orgName"
-                name="Organization Name"
+                id="empName"
+                name="empName"
                 autoComplete="name"
                 type="text"
-                label="Organization Name"
+                label="Фамилия Имя Отчество"
                 isRequired={true}
                 handleChange={(e) => setName(e.target.value)}
                 value={name}
               />
               <InputField
                 id="address"
-                name="OrganizationAddress"
+                name="EmployeeAddress"
                 autoComplete="address"
                 type="address"
-                label="Organization Address"
+                label="Employee's Address"
                 isRequired={true}
                 handleChange={(e) => setAddress(e.target.value)}
                 value={address}
               />
               <InputField
-                id="INN"
-                name="Organization INN"
-                autoComplete="number"
-                type="number"
-                label="Organization's INN"
+                id="position"
+                name="position"
+                autoComplete="level"
+                type="text"
+                label="Employees's Position"
                 isRequired={true}
-                handleChange={(e) => setInn(e.target.value)}
-                value={inn}
+                handleChange={(e) => setPosition(e.target.value)}
+                value={position}
               />
             </div>
             <div className="modal-footer">
@@ -98,7 +102,7 @@ function EditModal(props) {
   );
 }
 
-export default EditModal;
+export default EditModalEmployee;
 
 function InputField({ label, id, isRequired, handleChange, ...otherProps }) {
   return (

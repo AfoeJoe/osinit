@@ -3,10 +3,11 @@ import { combineReducers } from "redux";
 
 import { History } from "history";
 import ExampleReducer /*, { IExample } */ from "./ExampleReducer";
-import AuthReducer from './AuthReducer'
-import ModalReducer from './ModalReducer'
-import OrganizationReducer from './OrganizationReducer'
-import DivisionReducer from './DivisionReducer'
+import AuthReducer from "./AuthReducer";
+import ModalReducer from "./ModalReducer";
+import OrganizationReducer from "./OrganizationReducer";
+import DivisionReducer from "./DivisionReducer";
+import EmployeeReducer from "./EmployeeReducer";
 
 /**
  * @interface
@@ -27,9 +28,10 @@ const createRootReducer = (history /*: History*/) =>
       router: connectRouter(history),
       Example: ExampleReducer,
       Auth: AuthReducer,
-      Modal:ModalReducer,
-      Organization:OrganizationReducer,
-      Division:DivisionReducer
+      Modal: ModalReducer,
+      Organization: OrganizationReducer,
+      Division: DivisionReducer,
+      Employee: EmployeeReducer,
     }
   );
 
