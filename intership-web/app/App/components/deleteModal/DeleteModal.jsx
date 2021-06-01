@@ -7,7 +7,7 @@ function DeleteModal({ currentPage }) {
   const { toggleDelete, deleteOrganization, deleteDivision, deleteEmployee } =
     new Actions(dispatch);
   const { deleteData } = useSelector((state) => state.Modal);
-  const [stateError, setStateError] = useState("");
+  const [stateError, setStateError] = React.useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     const result =

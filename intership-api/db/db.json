@@ -15,14 +15,32 @@
       "name": "Joshua Okunola",
       "address": "2-ya yugozapagnaya 26a",
       "INN": 234567890
+    },
+    {
+      "id": 3,
+      "name": "Joshua Okunola",
+      "address": "2-ya yugozapagnaya 26a",
+      "INN": "4423456789"
     }
   ],
   "division": [
+    {
+      "id": 1,
+      "id_organization": 1,
+      "name": "Division 1",
+      "phone": "12345"
+    },
     {
       "id": 4,
       "id_organization": 4,
       "name": "Joshua Okunola",
       "phone": "+79270434722"
+    },
+    {
+      "id": 5,
+      "id_organization": 1,
+      "name": "Kazan State Power Engineering University",
+      "phone": "89270434722"
     },
     {
       "id": 6,
@@ -31,20 +49,13 @@
       "phone": "+79270434722"
     },
     {
-      "id": 3,
-      "id_organization": 1,
-      "name": "igihfhh",
-      "phone": "0689"
+      "id": 5,
+      "id_organization": 3,
+      "name": "Joshua Okunola",
+      "phone": "+79270434722"
     }
   ],
   "employee": [
-    {
-      "id": 1,
-      "id_division": 1,
-      "FIO": "Joshua Okunola",
-      "address": "2-ya yugozapagnaya 26a",
-      "position": "position 2"
-    },
     {
       "id": 2,
       "id_division": 2,
@@ -65,6 +76,13 @@
       "FIO": "erik cartman",
       "address": "23 grove street",
       "position": "cj"
+    },
+    {
+      "id": 4,
+      "id_division": 1,
+      "FIO": "Joshua Okunola",
+      "address": "2-ya yugozapagnaya 26a",
+      "position": "position of thee highest order"
     }
   ]
 }
