@@ -1,24 +1,26 @@
-import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Actions } from "../../../Actions/Actions";
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-function DeleteModal({ currentPage }) {
+import { Actions } from '../../../Actions/Actions';
+import { IStoreState } from '../../../Reducers/Reducers';
+
+function DeleteModal({ currentPage }: { currentPage: string }) {
   const dispatch = useDispatch();
   const { toggleDelete, deleteOrganization, deleteDivision, deleteEmployee } =
     new Actions(dispatch);
-  const { deleteData } = useSelector((state) => state.Modal);
-  const [stateError, setStateError] = React.useState("");
-  const handleSubmit = (e) => {
+  const { deleteData } = useSelector((state: IStoreState) => state.Modal);
+  const [stateError, setStateError] = React.useState('');
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const result =
-      currentPage === "organization"
+      currentPage === 'organization'
         ? deleteOrganization(deleteData.id)
-        : currentPage === "division"
+        : currentPage === 'division'
         ? deleteDivision(deleteData.id)
         : deleteEmployee(deleteData.id);
     result
-      .then((res) => {
-        toggleDelete();
+      .then(() => {
+        toggleDelete(null);
       })
       .catch((error) => setStateError(error));
   };
@@ -29,19 +31,19 @@ function DeleteModal({ currentPage }) {
           <form onSubmit={handleSubmit}>
             <div className="modal-header">
               <h4 className="modal-title">
-                Delete{" "}
-                {currentPage === "organization"
-                  ? "Organization"
-                  : currentPage === "division"
-                  ? "division"
-                  : "employee"}
+                Delete{' '}
+                {currentPage === 'organization'
+                  ? 'Organization'
+                  : currentPage === 'division'
+                  ? 'division'
+                  : 'employee'}
               </h4>
               <button
                 type="button"
                 className="close"
                 data-dismiss="modal"
                 aria-hidden="true"
-                onClick={toggleDelete}
+                onClick={() => toggleDelete(null)}
               >
                 &times;
               </button>
@@ -64,7 +66,7 @@ function DeleteModal({ currentPage }) {
                 className="btn btn-default"
                 data-dismiss="modal"
                 value="Cancel"
-                onClick={toggleDelete}
+                onClick={() => toggleDelete(null)}
               />
               {stateError && (
                 <div className="alert alert-danger" role="alert">
@@ -80,9 +82,9 @@ function DeleteModal({ currentPage }) {
   );
 }
 DeleteModal.defaultProps = {
-  type: "button",
+  type: 'button',
   disabled: false,
-  text: "Click Me",
+  text: 'Click Me',
 };
 
 export default DeleteModal;

@@ -1,4 +1,5 @@
-import {Action} from 'redux';
+import { Action } from 'redux';
+import { Actions } from './Actions/Actions';
 
 /**
  * Вид используемых экшенов.
@@ -6,6 +7,10 @@ import {Action} from 'redux';
  * @prop {any} [payload] Дополнительная информация для экшена.
  */
 export interface IActionType extends Action {
-    type: string;
-    payload?: any;
+  type: string;
+  payload?: any;
+}
+
+export interface IDispatchProps {
+  actions: Actions;
 }

@@ -1,20 +1,23 @@
-import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Actions } from "../../../Actions/Actions";
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-function EditModal(props) {
+import { Actions } from '../../../Actions/Actions';
+import { IStoreState } from '../../../Reducers/Reducers';
+import InputField from './../inputField2/InputField2';
+
+function EditModal() {
   const dispatch = useDispatch();
   const { toggleEdit, createOrganization } = new Actions(dispatch);
-  const { editData } = useSelector((state) => state.Modal);
-  const [name, setName] = React.useState(editData.name || "");
-  const [address, setAddress] = React.useState(editData.address || "");
+  const { editData } = useSelector((state: IStoreState) => state.Modal);
+  const [name, setName] = React.useState(editData.name || '');
+  const [address, setAddress] = React.useState(editData.address || '');
   const [inn, setInn] = React.useState(editData.INN || 0);
-  const [error, setError] = React.useState("");
+  const [error, setError] = React.useState('');
   const isAdd = editData.name ? false : true;
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (!name || !address || inn.toString().length != 10) {
-      setError("Please,Provide valid details!");
+    if (!name || !address || inn.toString().length !== 10) {
+      setError('Please,Provide valid details!');
       return;
     }
     createOrganization({ name, address, INN: inn, id: editData.id || null });
@@ -28,7 +31,7 @@ function EditModal(props) {
           <form onSubmit={handleSubmit}>
             <div className="modal-header">
               <h4 className="modal-title">
-                {isAdd ? "Add" : "Edit"} Organization
+                {isAdd ? 'Add' : 'Edit'} Organization
               </h4>
               <button
                 type="button"
@@ -42,7 +45,7 @@ function EditModal(props) {
             </div>
             {error && (
               <div className="alert alert-danger" role="alert">
-                {error}{" "}
+                {error}{' '}
               </div>
             )}
             <div className="modal-body">
@@ -63,7 +66,9 @@ function EditModal(props) {
                 type="address"
                 label="Organization Address"
                 isRequired={true}
-                handleChange={(e) => setAddress(e.target.value)}
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setAddress(e.target.value)
+                }
                 value={address}
               />
               <InputField
@@ -73,7 +78,9 @@ function EditModal(props) {
                 type="number"
                 label="Organization's INN"
                 isRequired={true}
-                handleChange={(e) => setInn(e.target.value)}
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setInn(e.target.value)
+                }
                 value={inn}
               />
             </div>
@@ -88,7 +95,7 @@ function EditModal(props) {
               <input
                 type="submit"
                 className="btn btn-success"
-                value={isAdd ? "Add" : "Edit"}
+                value={isAdd ? 'Add' : 'Edit'}
               />
             </div>
           </form>
@@ -99,20 +106,3 @@ function EditModal(props) {
 }
 
 export default EditModal;
-
-function InputField({ label, id, isRequired, handleChange, ...otherProps }) {
-  return (
-    <div>
-      <div className="form-group">
-        <label htmlFor={id}>{label}</label>
-        <input
-          id={id}
-          {...otherProps}
-          required={isRequired}
-          onChange={handleChange}
-          className="form-control"
-        />
-      </div>
-    </div>
-  );
-}

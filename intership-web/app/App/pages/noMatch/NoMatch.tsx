@@ -1,13 +1,13 @@
-import * as React from "react";
-import { withRouter} from "react-router-dom";
-import BackButton from "../../components/backButton/BackButton";
+import {History} from 'history'
+import * as React from 'react';
 
-function NoMatch(props) {
+import BackButton from '../../components/backButton/BackButton';
+
+function NoMatch({history}: {history: History}) {
   return (
     <div className="container">
       <div className="d-flex flex-row justify-content-between my-2">
-      <BackButton history={props.history} />
-
+        <BackButton history={history} />
       </div>
       <div className="row">
         <div className="col-md-12">
@@ -23,4 +23,4 @@ function NoMatch(props) {
     </div>
   );
 }
-export default withRouter(NoMatch);
+export default NoMatch;

@@ -1,12 +1,19 @@
-import * as React from "react";
-import { NavLink } from "react-router-dom";
-import { connect } from "react-redux";
-import { routes } from "../../utils/constants";
-import { Actions } from "../../../Actions/Actions";
-import Logo from "../../resources/Logo.png";
-import "./navBar.css";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
-function Navbar(props) {
+import { IActionType, IDispatchProps } from '../../../common';
+import { Actions } from '../../../Actions/Actions';
+import { IStoreState } from '../../../Reducers/Reducers';
+import Logo from '../../resources/Logo.png';
+import { routes } from '../../utils/constants';
+import './navBar.css';
+
+type IProps = {
+  loginStatus: boolean;
+};
+function Navbar(props: IProps & IDispatchProps) {
   const { loginStatus, actions } = props;
   return (
     <>
@@ -39,12 +46,12 @@ function Navbar(props) {
     </>
   );
 }
-function mapStateToProps(state) {
+function mapStateToProps(state: IStoreState) {
   return {
     loginStatus: state.Auth.loginStatus,
   };
 }
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch<IActionType>): IDispatchProps {
   return {
     actions: new Actions(dispatch),
   };

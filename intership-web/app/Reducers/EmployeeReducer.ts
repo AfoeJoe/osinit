@@ -1,17 +1,29 @@
-import { ActionTypes, AsyncActionTypes } from "../Actions/Consts";
+import { IActionType } from '../common';
+import { ActionTypes, AsyncActionTypes } from '../Actions/Consts';
+import { IEmployeeItem } from '../Actions/Models';
+
+export interface IEmployee {
+  loading: boolean;
+  employees: null | IEmployeeItem[];
+  error?: string;
+  reload?: boolean;
+}
 
 const initialState = {
-  get state() {
+  get state(): IEmployee {
     return {
       loading: false,
       employees: null,
-      errors: "",
+      error: '',
       reload: false,
     };
   },
 };
 
-export default function reducer(state = initialState.state, action) {
+export default function reducer(
+  state: IEmployee = initialState.state,
+  action: IActionType
+) {
   switch (action.type) {
     case `${ActionTypes.FETCH_EMPLOYEES}${AsyncActionTypes.BEGIN}`:
       return {
@@ -28,7 +40,7 @@ export default function reducer(state = initialState.state, action) {
       return {
         ...state,
         loading: false,
-        errors: action.payload,
+        error: action.payload,
       };
     case `${ActionTypes.CREATE_EMPLOYEE}${AsyncActionTypes.BEGIN}`:
       return {
@@ -46,7 +58,7 @@ export default function reducer(state = initialState.state, action) {
       return {
         ...state,
         loading: false,
-        errors: action.payload,
+        error: action.payload,
       };
     case `${ActionTypes.EDIT_EMPLOYEE}${AsyncActionTypes.BEGIN}`:
       return {
@@ -64,7 +76,7 @@ export default function reducer(state = initialState.state, action) {
       return {
         ...state,
         loading: false,
-        errors: action.payload,
+        error: action.payload,
       };
     case `${ActionTypes.DELETE_EMPLOYEE}${AsyncActionTypes.BEGIN}`:
       return {
@@ -82,7 +94,7 @@ export default function reducer(state = initialState.state, action) {
       return {
         ...state,
         loading: false,
-        errors: action.payload,
+        error: action.payload,
       };
   }
   return state;

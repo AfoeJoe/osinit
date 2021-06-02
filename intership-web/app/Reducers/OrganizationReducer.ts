@@ -1,17 +1,29 @@
-import { ActionTypes, AsyncActionTypes } from "../Actions/Consts";
+import { IActionType } from '../common';
+import { ActionTypes, AsyncActionTypes } from '../Actions/Consts';
+import { IOrganizationItem } from '../Actions/Models';
+
+export interface IOrganization {
+  loading: boolean;
+  organizations: IOrganizationItem[] | null;
+  error?: string;
+  reload?: boolean;
+}
 
 const initialState = {
-  get state() {
+  get state(): IOrganization {
     return {
       loading: false,
       organizations: null,
-      errors: "",
+      error: '',
       reload: false,
     };
   },
 };
 
-export default function reducer(state = initialState.state, action) {
+export default function reducer(
+  state: IOrganization = initialState.state,
+  action: IActionType
+) {
   switch (action.type) {
     case `${ActionTypes.FETCH_ORG}${AsyncActionTypes.BEGIN}`:
       return {
@@ -28,7 +40,7 @@ export default function reducer(state = initialState.state, action) {
       return {
         ...state,
         loading: false,
-        errors: action.payload,
+        error: action.payload,
       };
     case `${ActionTypes.CREATE_ORG}${AsyncActionTypes.BEGIN}`:
       return {
@@ -46,7 +58,7 @@ export default function reducer(state = initialState.state, action) {
       return {
         ...state,
         loading: false,
-        errors: action.payload,
+        error: action.payload,
       };
     case `${ActionTypes.EDIT_ORG}${AsyncActionTypes.BEGIN}`:
       return {
@@ -64,7 +76,7 @@ export default function reducer(state = initialState.state, action) {
       return {
         ...state,
         loading: false,
-        errors: action.payload,
+        error: action.payload,
       };
     case `${ActionTypes.DELETE_ORG}${AsyncActionTypes.BEGIN}`:
       return {
@@ -82,8 +94,9 @@ export default function reducer(state = initialState.state, action) {
       return {
         ...state,
         loading: false,
-        errors: action.payload,
+        error: action.payload,
       };
+    default:
+      return state;
   }
-  return state;
 }

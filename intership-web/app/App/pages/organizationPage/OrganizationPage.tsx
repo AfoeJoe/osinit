@@ -1,19 +1,21 @@
-import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import CustomButton from "../../components/customButton/CustomButton";
-import BackButton from "../../components/backButton/BackButton";
-import Table from "../../components/table/Table";
-import AddModal from "../../components/addModal/AddModal";
-import EditModal from "../../components/editModal/EditModal";
-import DeleteModal from "../../components/deleteModal/DeleteModal";
-import { Actions } from "../../../Actions/Actions";
+import {History} from 'history'
+import * as React from 'react';
+import { useDispatch,useSelector } from 'react-redux';
 
-export default function OrganizationPage(props) {
-  const { openEdit, openDelete } = useSelector((state) => state.Modal);
+import { Actions } from '../../../Actions/Actions';
+import {IStoreState} from '../../../Reducers/Reducers'
+import BackButton from '../../components/backButton/BackButton';
+import CustomButton from '../../components/customButton/CustomButton';
+import DeleteModal from '../../components/deleteModal/DeleteModal';
+import EditModal from '../../components/editModal/EditModal';
+import Table from '../../components/table/Table';
+
+export default function OrganizationPage({history}: {history: History}) {
+  const { openEdit, openDelete } = useSelector((state: IStoreState) => state.Modal);
   const dispatch = useDispatch();
   const actions = new Actions(dispatch);
   const { organizations, loading, reload } = useSelector(
-    (state) => state.Organization
+    (state: IStoreState) => state.Organization
   );
 
   React.useEffect(() => {
@@ -22,17 +24,17 @@ export default function OrganizationPage(props) {
   return (
     <div className="container ">
       <div className="d-flex flex-row justify-content-between my-2">
-        <BackButton history={props.history} />
+        <BackButton history={history} />
         <CustomButton
           text="Add Organization"
           className="d-flex btn-primary"
           onClick={actions.toggleEdit}
         >
-          <i className="material-icons">&#xE147;</i>{" "}
+          <i className="material-icons">&#xE147;</i>{' '}
         </CustomButton>
       </div>
       <div className="table-responsive">
-        {loading && "loading..."}
+        {loading && 'loading...'}
         {organizations && (
           <Table data={organizations} currentPage="organization" />
         )}

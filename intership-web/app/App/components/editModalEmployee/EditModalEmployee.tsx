@@ -1,20 +1,23 @@
-import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Actions } from "../../../Actions/Actions";
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-function EditModalEmployee({ id_division }) {
+import { Actions } from '../../../Actions/Actions';
+import { IStoreState } from '../../../Reducers/Reducers';
+import InputField from './../inputField2/InputField2';
+
+function EditModalEmployee({ id_division }: { id_division: number }) {
   const dispatch = useDispatch();
   const { toggleEdit, createEmployee } = new Actions(dispatch);
-  const { editData } = useSelector((state) => state.Modal);
-  const [name, setName] = React.useState(editData.FIO || "");
-  const [address, setAddress] = React.useState(editData.address || "");
-  const [position, setPosition] = React.useState(editData.position || "");
-  const [error, setError] = React.useState("");
+  const { editData } = useSelector((state: IStoreState) => state.Modal);
+  const [name, setName] = React.useState(editData.FIO || '');
+  const [address, setAddress] = React.useState(editData.address || '');
+  const [position, setPosition] = React.useState(editData.position || '');
+  const [error, setError] = React.useState('');
   const isAdd = editData.id ? false : true;
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!name || !position || !id_division) {
-      setError("Please,None of those fields can be left empty!");
+      setError('Please,None of those fields can be left empty!');
       return;
     }
     createEmployee({
@@ -26,14 +29,13 @@ function EditModalEmployee({ id_division }) {
     });
     toggleEdit();
   };
-  console.log(editData);
   return (
     <div id="addEmployeeModal" className="modal fade show">
       <div className="modal-dialog">
         <div className="modal-content">
           <form onSubmit={handleSubmit}>
             <div className="modal-header">
-              <h4 className="modal-title">{isAdd ? "Add" : "Edit"} Employee</h4>
+              <h4 className="modal-title">{isAdd ? 'Add' : 'Edit'} Employee</h4>
               <button
                 type="button"
                 className="close"
@@ -46,7 +48,7 @@ function EditModalEmployee({ id_division }) {
             </div>
             {error && (
               <div className="alert alert-danger" role="alert">
-                {error}{" "}
+                {error}{' '}
               </div>
             )}
             <div className="modal-body">
@@ -92,7 +94,7 @@ function EditModalEmployee({ id_division }) {
               <input
                 type="submit"
                 className="btn btn-success"
-                value={isAdd ? "Add" : "Edit"}
+                value={isAdd ? 'Add' : 'Edit'}
               />
             </div>
           </form>
@@ -103,20 +105,3 @@ function EditModalEmployee({ id_division }) {
 }
 
 export default EditModalEmployee;
-
-function InputField({ label, id, isRequired, handleChange, ...otherProps }) {
-  return (
-    <div>
-      <div className="form-group">
-        <label htmlFor={id}>{label}</label>
-        <input
-          id={id}
-          {...otherProps}
-          required={isRequired}
-          onChange={handleChange}
-          className="form-control"
-        />
-      </div>
-    </div>
-  );
-}

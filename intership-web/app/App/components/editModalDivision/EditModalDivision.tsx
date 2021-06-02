@@ -1,23 +1,24 @@
-import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Actions } from "../../../Actions/Actions";
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-function EditModalDivision({ id_organization }) {
+import { Actions } from '../../../Actions/Actions';
+import { IStoreState } from '../../../Reducers/Reducers';
+import InputField from './../inputField2/InputField2';
+
+function EditModalDivision({ id_organization }: { id_organization: number }) {
   const dispatch = useDispatch();
   const { toggleEdit, createDivision } = new Actions(dispatch);
-  const { editData } = useSelector((state) => state.Modal);
-  const [name, setName] = React.useState(editData.name || "");
-  // const [id_organization, setIdOrganization] = React.useState(editData.id_organization || "");
+  const { editData } = useSelector((state: IStoreState) => state.Modal);
+  const [name, setName] = React.useState(editData.name || '');
   const [phone, setPhone] = React.useState(editData.phone || 0);
-  const [error, setError] = React.useState("");
+  const [error, setError] = React.useState('');
   const isAdd = editData.name ? false : true;
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!name || !phone || !id_organization) {
-      setError("Please,Provide valid details!");
+      setError('Please,Provide valid details!');
       return;
     }
-
     createDivision({ name, id_organization, phone, id: editData.id || null });
     toggleEdit();
   };
@@ -27,7 +28,7 @@ function EditModalDivision({ id_organization }) {
         <div className="modal-content">
           <form onSubmit={handleSubmit}>
             <div className="modal-header">
-              <h4 className="modal-title">{isAdd ? "Add" : "Edit"} Division</h4>
+              <h4 className="modal-title">{isAdd ? 'Add' : 'Edit'} Division</h4>
               <button
                 type="button"
                 className="close"
@@ -40,7 +41,7 @@ function EditModalDivision({ id_organization }) {
             </div>
             {error && (
               <div className="alert alert-danger" role="alert">
-                {error}{" "}
+                {error}{' '}
               </div>
             )}
             <div className="modal-body">
@@ -51,7 +52,9 @@ function EditModalDivision({ id_organization }) {
                 type="text"
                 label="Division Name"
                 isRequired={true}
-                handleChange={(e) => setName(e.target.value)}
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setName(e.target.value)
+                }
                 value={name}
               />
               <InputField
@@ -61,7 +64,9 @@ function EditModalDivision({ id_organization }) {
                 type="tel"
                 label="Division's Phone"
                 isRequired={true}
-                handleChange={(e) => setPhone(e.target.value)}
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPhone(e.target.value)
+                }
                 value={phone}
               />
             </div>
@@ -76,7 +81,7 @@ function EditModalDivision({ id_organization }) {
               <input
                 type="submit"
                 className="btn btn-success"
-                value={isAdd ? "Add" : "Edit"}
+                value={isAdd ? 'Add' : 'Edit'}
               />
             </div>
           </form>
@@ -87,20 +92,3 @@ function EditModalDivision({ id_organization }) {
 }
 
 export default EditModalDivision;
-
-function InputField({ label, id, isRequired, handleChange, ...otherProps }) {
-  return (
-    <div>
-      <div className="form-group">
-        <label htmlFor={id}>{label}</label>
-        <input
-          id={id}
-          {...otherProps}
-          required={isRequired}
-          onChange={handleChange}
-          className="form-control"
-        />
-      </div>
-    </div>
-  );
-}

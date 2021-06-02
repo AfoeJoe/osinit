@@ -14,5 +14,7 @@
         "target": "es5",
         "jsx": "react",
         "allowJs": true
-    }
+    },
+    "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],
+    "include": ["./app/", "./index.d.ts"] /// <-- Like this!!
 }

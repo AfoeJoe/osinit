@@ -1,44 +1,48 @@
-import { Dispatch } from "redux";
-//import {IActionType} from '../common';
-import { ActionTypes, AsyncActionTypes, ModalActionTypes } from "./Consts";
-//import {ILoginData} from './Models';
+import { Dispatch } from 'redux';
+import { IActionType } from '../common';
+import { ActionTypes, AsyncActionTypes, ModalActionTypes } from './Consts';
+import {
+  IDivisionItem,
+  IEmployeeItem,
+  ILoginData,
+  IOrganizationItem,
+} from './Models';
 
 /**
  * Экшены для приложения.
  */
 export class Actions {
-  constructor(/*private*/ dispatch /*: Dispatch<IActionType>*/) {
-    this.dispatch = dispatch;
-  }
+  constructor(private dispatch: Dispatch<IActionType>) {}
 
   /*AUTH ACTIONS*/
-  onLogin = async (loginData /*: ILoginData*/) => {
+  onLogin = async (loginData: ILoginData): Promise<{ isLogin: boolean }> => {
+    let returnValue;
     this.dispatch({ type: `${ActionTypes.LOGIN}${AsyncActionTypes.BEGIN}` });
 
     const options = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
-      body: JSON.stringify(loginData),
+      body: JSON.stringify({ loginData: loginData }),
     };
-    await fetch("http://127.0.0.1:8080/authorize", options)
+    await fetch('http://127.0.0.1:8080/authorize', options)
       .then((response) => {
         if (response.status === 200) {
           return response.json();
         } else {
-          throw "server error";
+          throw 'server error';
         }
       })
-      .then((response) => {
-        if (response.isLogin) {
+      .then((res) => {
+        returnValue = res;
+        if (returnValue.isLogin) {
           this.dispatch({
             type: `${ActionTypes.LOGIN}${AsyncActionTypes.SUCCESS}`,
           });
         } else {
-          throw "login details errors";
+          throw 'login details errors';
         }
-        return response.isLogin;
       })
       .catch((error) => {
         this.dispatch({
@@ -46,18 +50,19 @@ export class Actions {
           payload: error,
         });
       });
+    return returnValue;
   };
 
   onLogout = () => {
     const options = {
-      method: "POST",
+      method: 'POST',
     };
-    fetch("http://127.0.0.1:8080/logout", options)
+    fetch('http://127.0.0.1:8080/logout', options)
       .then((response) => {
         if (response.status === 200) {
           this.dispatch({ type: ActionTypes.LOGOUT });
         } else {
-          throw "error";
+          throw 'error';
         }
       })
       .catch(() => {
@@ -69,8 +74,9 @@ export class Actions {
   toggleEdit = (data = {}) => {
     this.dispatch({ type: ModalActionTypes.EDIT, payload: data });
   };
-  toggleDelete = (data) =>
-    this.dispatch({ type: ModalActionTypes.DELETE, payload: data });
+  toggleDelete = (
+    data: IDivisionItem | IEmployeeItem | IOrganizationItem | null
+  ) => this.dispatch({ type: ModalActionTypes.DELETE, payload: data });
 
   /*ORGANIZATION ACTIONS*/
   getOrganizations = async () => {
@@ -79,13 +85,13 @@ export class Actions {
     });
     const options = {
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
     };
 
-    await fetch("http://127.0.0.1:8080/organization", options)
+    await fetch('http://127.0.0.1:8080/organization', options)
       .then((response) => {
-        if (response.status !== 200) throw "error";
+        if (response.status !== 200) throw 'error';
         response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes.FETCH_ORG}${AsyncActionTypes.SUCCESS}`,
@@ -101,31 +107,32 @@ export class Actions {
         });
       });
   };
-  createOrganization = async (orgData) => {
+  createOrganization = async (orgData: IOrganizationItem) => {
+    let keyWord: string, method: string, url: string;
     if (orgData.id) {
-      const keyWord = "EDIT_ORG";
-      const method = "PUT";
-      const url = `http://127.0.0.1:8080/organization/?id=${orgData.id}`;
+      keyWord = ActionTypes.EDIT_ORG;
+      method = 'PUT';
+      url = `http://127.0.0.1:8080/organization/?id=${orgData.id}`;
     } else {
-      const keyWord = "CREATE_ORG";
-      const method = "POST";
-      const url = `http://127.0.0.1:8080/organization`;
+      keyWord = ActionTypes.CREATE_ORG;
+      method = 'POST';
+      url = `http://127.0.0.1:8080/organization`;
     }
-    this.dispatch({ type: `${ActionTypes[keyWord]}${AsyncActionTypes.BEGIN}` });
+    this.dispatch({ type: `${keyWord}${AsyncActionTypes.BEGIN}` });
     const options = {
       method: method,
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
       body: JSON.stringify(orgData),
     };
 
     await fetch(url, options)
       .then((response) => {
-        if (response.status !== 200) throw "error";
+        if (response.status !== 200) throw 'error';
         response.json().then((data) => {
           this.dispatch({
-            type: `${ActionTypes[keyWord]}${AsyncActionTypes.SUCCESS}`,
+            type: `${keyWord}${AsyncActionTypes.SUCCESS}`,
             payload: data,
           });
           return data;
@@ -133,25 +140,25 @@ export class Actions {
       })
       .catch((error) => {
         this.dispatch({
-          type: `${ActionTypes[keyWord]}${AsyncActionTypes.FAILURE}`,
+          type: `${keyWord}${AsyncActionTypes.FAILURE}`,
           payload: error,
         });
       });
   };
 
-  deleteOrganization = async (id) => {
+  deleteOrganization = async (id: number) => {
     this.dispatch({
       type: `${ActionTypes.DELETE_ORG}${AsyncActionTypes.BEGIN}`,
     });
     const options = {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
     };
     await fetch(`http://127.0.0.1:8080/organization/?id=${id}`, options)
       .then((response) => {
-        if (response.status !== 200) throw "error";
+        if (response.status !== 200) throw 'error';
         response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes.DELETE_ORG}${AsyncActionTypes.SUCCESS}`,
@@ -173,7 +180,7 @@ export class Actions {
     if (!id) {
       return this.dispatch({
         type: `${ActionTypes.FETCH_DIV}${AsyncActionTypes.FAILURE}`,
-        payload: "Error,No ID passed!",
+        payload: 'Error,No ID passed!',
       });
     }
     this.dispatch({
@@ -181,13 +188,13 @@ export class Actions {
     });
     const options = {
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
     };
 
     await fetch(`http://127.0.0.1:8080/division/?id=${id}`, options)
       .then((response) => {
-        if (response.status !== 200) throw "error";
+        if (response.status !== 200) throw 'error';
         response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes.FETCH_DIV}${AsyncActionTypes.SUCCESS}`,
@@ -204,31 +211,33 @@ export class Actions {
       });
   };
 
-  createDivision = async (divData) => {
+  createDivision = async (divData: IDivisionItem) => {
+    let keyWord: string, method: string, url: string;
+
     if (divData.id) {
-      const keyWord = "EDIT_DIV";
-      const method = "PUT";
-      const url = `http://127.0.0.1:8080/division/?id=${divData.id}`;
+      keyWord = ActionTypes.EDIT_DIV;
+      method = 'PUT';
+      url = `http://127.0.0.1:8080/division/?id=${divData.id}`;
     } else {
-      const keyWord = "CREATE_DIV";
-      const method = "POST";
-      const url = `http://127.0.0.1:8080/division`;
+      keyWord = ActionTypes.CREATE_DIV;
+      method = 'POST';
+      url = `http://127.0.0.1:8080/division`;
     }
-    this.dispatch({ type: `${ActionTypes[keyWord]}${AsyncActionTypes.BEGIN}` });
+    this.dispatch({ type: `${keyWord}${AsyncActionTypes.BEGIN}` });
     const options = {
       method: method,
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
       body: JSON.stringify(divData),
     };
 
     await fetch(url, options)
       .then((response) => {
-        if (response.status !== 200) throw "error";
+        if (response.status !== 200) throw 'error';
         response.json().then((data) => {
           this.dispatch({
-            type: `${ActionTypes[keyWord]}${AsyncActionTypes.SUCCESS}`,
+            type: `${keyWord}${AsyncActionTypes.SUCCESS}`,
             payload: data,
           });
           return data;
@@ -236,24 +245,24 @@ export class Actions {
       })
       .catch((error) => {
         this.dispatch({
-          type: `${ActionTypes[keyWord]}${AsyncActionTypes.FAILURE}`,
+          type: `${keyWord}${AsyncActionTypes.FAILURE}`,
           payload: error,
         });
       });
   };
-  deleteDivision = async (id) => {
+  deleteDivision = async (id: number) => {
     this.dispatch({
       type: `${ActionTypes.DELETE_DIV}${AsyncActionTypes.BEGIN}`,
     });
     const options = {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
     };
     await fetch(`http://127.0.0.1:8080/division/?id=${id}`, options)
       .then((response) => {
-        if (response.status !== 200) throw "error";
+        if (response.status !== 200) throw 'error';
         response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes.DELETE_DIV}${AsyncActionTypes.SUCCESS}`,
@@ -275,7 +284,7 @@ export class Actions {
     if (!id_divsion) {
       return this.dispatch({
         type: `${ActionTypes.FETCH_EMPLOYEES}${AsyncActionTypes.FAILURE}`,
-        payload: "Error,No ID passed!",
+        payload: 'Error,No ID passed!',
       });
     }
     this.dispatch({
@@ -283,13 +292,13 @@ export class Actions {
     });
     const options = {
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
     };
 
     await fetch(`http://127.0.0.1:8080/employee/?id=${id_divsion}`, options)
       .then((response) => {
-        if (response.status !== 200) throw "error";
+        if (response.status !== 200) throw 'error';
         response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes.FETCH_EMPLOYEES}${AsyncActionTypes.SUCCESS}`,
@@ -306,31 +315,33 @@ export class Actions {
       });
   };
 
-  createEmployee = async (empData) => {
+  createEmployee = async (empData: IEmployeeItem) => {
+    let keyWord: string, method: string, url: string;
+
     if (empData.id) {
-      const keyWord = "EDIT_EMPLOYEE";
-      const method = "PUT";
-      const url = `http://127.0.0.1:8080/employee/?id=${empData.id}`;
+      keyWord = ActionTypes.EDIT_EMPLOYEE;
+      method = 'PUT';
+      url = `http://127.0.0.1:8080/employee/?id=${empData.id}`;
     } else {
-      const keyWord = "CREATE_EMPLOYEE";
-      const method = "POST";
-      const url = `http://127.0.0.1:8080/employee`;
+      keyWord = ActionTypes.CREATE_EMPLOYEE;
+      method = 'POST';
+      url = `http://127.0.0.1:8080/employee`;
     }
-    this.dispatch({ type: `${ActionTypes[keyWord]}${AsyncActionTypes.BEGIN}` });
+    this.dispatch({ type: `${keyWord}${AsyncActionTypes.BEGIN}` });
     const options = {
       method: method,
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
       body: JSON.stringify(empData),
     };
 
     await fetch(url, options)
       .then((response) => {
-        if (response.status !== 200) throw "error";
+        if (response.status !== 200) throw 'error';
         response.json().then((data) => {
           this.dispatch({
-            type: `${ActionTypes[keyWord]}${AsyncActionTypes.SUCCESS}`,
+            type: `${keyWord}${AsyncActionTypes.SUCCESS}`,
             payload: data,
           });
           return data;
@@ -338,24 +349,24 @@ export class Actions {
       })
       .catch((error) => {
         this.dispatch({
-          type: `${ActionTypes[keyWord]}${AsyncActionTypes.FAILURE}`,
+          type: `${keyWord}${AsyncActionTypes.FAILURE}`,
           payload: error,
         });
       });
   };
-  deleteEmployee = async (id) => {
+  deleteEmployee = async (id: number) => {
     this.dispatch({
       type: `${ActionTypes.DELETE_EMPLOYEE}${AsyncActionTypes.BEGIN}`,
     });
     const options = {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
     };
     await fetch(`http://127.0.0.1:8080/employee/?id=${id}`, options)
       .then((response) => {
-        if (response.status !== 200) throw "error";
+        if (response.status !== 200) throw 'error';
         response.json().then((data) => {
           this.dispatch({
             type: `${ActionTypes.DELETE_EMPLOYEE}${AsyncActionTypes.SUCCESS}`,
