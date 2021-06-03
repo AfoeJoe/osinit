@@ -3,6 +3,11 @@ import * as React from 'react';
 
 import CustomButton from '../customButton/CustomButton';
 
+/**
+ * Backbutton component
+ * @param history - from the history library
+ * @returns a CustomButton component that enables going back
+ */
 function BackButton({ history }: { history: History }) {
   return (
     <CustomButton

@@ -1,9 +1,13 @@
-import {History} from 'history'
+import { History } from 'history';
 import * as React from 'react';
 
 import BackButton from '../../components/backButton/BackButton';
-
-function NoMatch({history}: {history: History}) {
+/**
+ * Basically a 404 page
+ * @param history - Browser history passed to the backbutton component
+ * @returns
+ */
+function NoMatch({ history }: { history: History }) {
   return (
     <div className="container">
       <div className="d-flex flex-row justify-content-between my-2">

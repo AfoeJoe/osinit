@@ -1,11 +1,23 @@
 import * as React from 'react';
 
+/**
+ * Input field props
+ * @props label - label for the input field
+ * @props id - id for the input field
+ * @props handleChange - the onChange handler
+ */
 type IInputFieldProps = {
   label: string;
   id: string;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
   [otherProps: string]: any;
 };
+
+/**
+ * @function  InputField -  input field component
+ * @param props - list of props passed in directly
+ * @returns a custom input field
+ */
 function InputField({
   label,
   id,

@@ -1,3 +1,6 @@
+/**
+ * Page route constants
+ */
 export const routes = {
   HOME: '/',
   LOGIN: '/login',

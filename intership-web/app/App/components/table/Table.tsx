@@ -23,7 +23,6 @@ export default function Table({ data = null, currentPage }: IProps) {
       : '';
   const dispatch = useDispatch();
   const actions = new Actions(dispatch);
-  console.log(data);
 
   return (
     <table className="table table-hover">

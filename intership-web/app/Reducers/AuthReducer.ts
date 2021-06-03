@@ -16,7 +16,12 @@ const initialState = {
     };
   },
 };
-
+/**
+ * Auth reducer
+ * @param state the initial auth state
+ * @param action action object with type and payload as entries
+ * @returns the new state after login or logout actions
+ */
 export default function reducer(
   state: IAuth = initialState.state,
   action: IActionType

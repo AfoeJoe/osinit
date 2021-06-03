@@ -2,6 +2,13 @@ import { IActionType } from '../common';
 import { ActionTypes, AsyncActionTypes } from '../Actions/Consts';
 import { IDivisionItem } from '../Actions/Models';
 
+/**
+ * Division Props from the store
+ * @prop Division  - either a list of returned Division data or null
+ * @prop reload  -Optional state,used to determine a refresh of the Division data
+ * @prop loading - to signify a waiting request from the server
+ * @prop error - optional state, holds the error state related to the action from the Division action creators
+ */
 export interface IDivision {
   loading: boolean;
   divisions: null | IDivisionItem[];
@@ -18,7 +25,12 @@ const initialState = {
     };
   },
 };
-
+/**
+ * Division reducer
+ * @param state the initial division state
+ * @param action action object with type and payload as entries
+ * @returns the new state after fetch,create,edit or delete actions
+ */
 export default function reducer(
   state: IDivision = initialState.state,
   action: IActionType

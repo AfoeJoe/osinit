@@ -14,7 +14,11 @@ import {
 export class Actions {
   constructor(private dispatch: Dispatch<IActionType>) {}
 
-  /*AUTH ACTIONS*/
+  /**
+   * onLogin
+   * @param loginData - {name: name,password:password}
+   * @returns a promise object {isLogin : true | false}
+   */
   onLogin = async (loginData: ILoginData): Promise<{ isLogin: boolean }> => {
     let returnValue;
     this.dispatch({ type: `${ActionTypes.LOGIN}${AsyncActionTypes.BEGIN}` });
@@ -53,6 +57,10 @@ export class Actions {
     return returnValue;
   };
 
+  /**
+   * onLogout
+   * @return - void
+   */
   onLogout = () => {
     const options = {
       method: 'POST',
@@ -70,10 +78,17 @@ export class Actions {
       });
   };
 
-  /*MODAL ACTIONS*/
+  /**
+   * toggleEdit - dispatches the add|edit action
+   * @param data - null | object of (organization | division | employee)
+   */
   toggleEdit = (data = {}) => {
     this.dispatch({ type: ModalActionTypes.EDIT, payload: data });
   };
+  /**
+   * toggleDelete - dispatches the add|delete action
+   * @param data - null | object of (organization | division | employee)
+   */
   toggleDelete = (
     data: IDivisionItem | IEmployeeItem | IOrganizationItem | null
   ) => this.dispatch({ type: ModalActionTypes.DELETE, payload: data });

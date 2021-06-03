@@ -5,6 +5,11 @@ import { Actions } from '../../../Actions/Actions';
 import { IStoreState } from '../../../Reducers/Reducers';
 import InputField from './../inputField2/InputField2';
 
+/**
+ * EditModalEmployee
+ * @param id_division - takes in the division id
+ * @returns the edit  modal for the employee page
+ */
 function EditModalEmployee({ id_division }: { id_division: number }) {
   const dispatch = useDispatch();
   const { toggleEdit, createEmployee } = new Actions(dispatch);
@@ -26,8 +31,9 @@ function EditModalEmployee({ id_division }: { id_division: number }) {
       position,
       address,
       id: editData.id || null,
+    }).then(() => {
+      toggleEdit();
     });
-    toggleEdit();
   };
   return (
     <div id="addEmployeeModal" className="modal fade show">

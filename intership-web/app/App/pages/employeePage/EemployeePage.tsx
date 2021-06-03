@@ -10,11 +10,20 @@ import DeleteModal from '../../components/deleteModal/DeleteModal';
 import EditModalEmployee from '../../components/editModalEmployee/EditModalEmployee';
 import Table from '../../components/table/Table';
 
+/**
+ * @props match - acces the current page's url parameter
+ * @props history - application navigation history from history library
+ */
 type IProps = {
   match: any;
   history: History;
 };
 
+/**
+ * Employee Page as matched from the app component
+ * @param props - match and history
+ * @returns - the employee page
+ */
 export default function EemployeePage(props: IProps) {
   const { openEdit, openDelete } = useSelector(
     (state: IStoreState) => state.Modal

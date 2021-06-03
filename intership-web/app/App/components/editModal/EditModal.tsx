@@ -5,10 +5,16 @@ import { Actions } from '../../../Actions/Actions';
 import { IStoreState } from '../../../Reducers/Reducers';
 import InputField from './../inputField2/InputField2';
 
+/**
+ * EditModal
+ * @returns the edit  modal for the organizaion page
+ */
 function EditModal() {
   const dispatch = useDispatch();
   const { toggleEdit, createOrganization } = new Actions(dispatch);
-  const { editData } = useSelector((state: IStoreState) => state.Modal);
+  const { editData, openEdit } = useSelector(
+    (state: IStoreState) => state.Modal
+  );
   const [name, setName] = React.useState(editData.name || '');
   const [address, setAddress] = React.useState(editData.address || '');
   const [inn, setInn] = React.useState(editData.INN || 0);
@@ -20,12 +26,21 @@ function EditModal() {
       setError('Please,Provide valid details!');
       return;
     }
-    createOrganization({ name, address, INN: inn, id: editData.id || null });
-    toggleEdit();
+    createOrganization({
+      name,
+      address,
+      INN: inn,
+      id: editData.id || null,
+    }).then(() => {
+      toggleEdit();
+    });
   };
 
   return (
-    <div id="addEmployeeModal" className="modal fade show">
+    <div
+      id="addEmployeeModal"
+      className={openEdit ? 'modal fade  show' : 'modal fade'}
+    >
       <div className="modal-dialog">
         <div className="modal-content">
           <form onSubmit={handleSubmit}>

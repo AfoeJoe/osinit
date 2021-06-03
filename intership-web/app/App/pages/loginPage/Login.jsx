@@ -1,20 +1,20 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import Button from "../../components/customButton/CustomButton";
-import InputField from "../../components/inputField/InputField";
-import Logo from "../../resources/Logo.png";
-import { routes } from "../../utils/constants";
-import { Actions } from "../../../Actions/Actions";
-import "./login.css";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import Button from '../../components/customButton/CustomButton';
+import InputField from '../../components/inputField/InputField';
+import Logo from '../../resources/Logo.png';
+import { routes } from '../../utils/constants';
+import { Actions } from '../../../Actions/Actions';
+import './login.css';
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      stateError: "",
+      username: '',
+      password: '',
+      stateError: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,7 +24,7 @@ class LoginPage extends React.Component {
   handleSubmit(e) {
     const { username, password } = this.state;
     if (!username || !password) {
-      this.setState({ stateError: "Please, fill in your login details" });
+      this.setState({ stateError: 'Please, fill in your login details' });
       return;
     }
     try {
@@ -45,7 +45,7 @@ class LoginPage extends React.Component {
           throw error;
         });
     } catch (error) {
-      this.setState({ stateError: "Please, fill in your login details" });
+      this.setState({ stateError: 'Please, fill in your login details' });
       console.log(error);
     }
 
@@ -56,8 +56,8 @@ class LoginPage extends React.Component {
     this.setState({ [name]: value });
   }
   render() {
-    let {loginStatus,waitingForLogin,error} = this.props;
-    const {password,stateError,username} = this.state; 
+    let { loginStatus, waitingForLogin, error } = this.props;
+    const { password, stateError, username } = this.state;
     return (
       <div className="text-center">
         <div className="sign-in-body">
@@ -86,24 +86,16 @@ class LoginPage extends React.Component {
             />
             {(error || stateError) && (
               <div className="alert alert-danger" role="alert">
-                {typeof error !== "object" &&
-                 error}
-                {" try again"}
+                {typeof error !== 'object' && error}
+                {' try again'}
               </div>
             )}
-            <div className="checkbox mb-3">
-              <label>
-                <input type="checkbox" value="remember-me" /> Remember me
-              </label>
-            </div>
-
             <Button
               type="submit"
               text="Sign In"
               className={`btn-primary btn-lg  btn-block`}
               disabled={waitingForLogin || loginStatus}
             />
-
             <p className="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
           </form>
         </div>

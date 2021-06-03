@@ -13,42 +13,14 @@ import { routes } from './utils/constants';
 import './App.css';
 
 /**
- * Пропсы компонента из стора.
- * @prop {boolean} loginStatus Состояние зарегистрированности пользователя.
- * @prop {boolean} waitingForLogin Ожидание завершения процедуры авторизации (завершение логина).
- * @prop {boolean} countResult Результат вычисления.
- * @prop {boolean} counting Выполнение вычисления.
- */
-// interface IStateProps{
-//     loginStatus: boolean;
-//     waitingForLogin: boolean;
-//     countResult: number;
-//     counting: boolean;
-// }
-
-/**
- * Пропсы для передачи экшенов.
- * @prop {Actions} actions Экшены для работы приложения.
- */
-// export interface IDispatchProps{
-//     actions: Actions;
-// }
-
-/**
- * Итоговые пропсы компонента
- */
-// type TProps = IStateProps & IDispatchProps;
-
-/**
- * Основной класс приложенsия.
+ * Main application class
+ * It houses the layout of the app (Navbar + the list of routes/protected routes)
  */
 export class App extends React.Component<{}, {}> {
   render() {
     return (
       <>
         <NavBar />
-        {/* A <Switch> looks through its children <Route>s and
-    renders the first one that matches the current URL. */}
         <Switch>
           <PrivateRoute path={routes.ORGANIZATION} comp={OrganizationPage} />
           <PrivateRoute path={routes.DIVISION} comp={DivisionPage} />

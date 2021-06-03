@@ -13,17 +13,28 @@ import { routes } from '../../utils/constants';
 
 import './login.css';
 
+/**
+ * @state username - holds the state of the username input field
+ * @state password - holds the state of the password input field
+ * @state stateError - holds the state of error generated during the filing of the form
+ */
 type MyState = {
   username: string;
   password: string;
   stateError: string;
 };
+/**
+ * props from the store
+ * @prop loginStatus - whether the user is logged in or not
+ * @prop waitingForLogin - signif
+ * @prop loginStatus - whether the user is logged in or not
+ */
 interface IStateProps {
   loginStatus: boolean;
   waitingForLogin: boolean;
   error: string;
 }
-
+/**Combined props */
 type TProps = IStateProps & IDispatchProps & { history: History };
 
 class LoginPage extends React.Component<TProps, MyState> {
@@ -104,19 +115,12 @@ class LoginPage extends React.Component<TProps, MyState> {
                 {' try again'}
               </div>
             )}
-            <div className="checkbox mb-3">
-              <label>
-                <input type="checkbox" value="remember-me" /> Remember me
-              </label>
-            </div>
-
             <CustomButton
               type="submit"
               text="Sign In"
               className={`btn-primary btn-lg  btn-block`}
               disabled={waitingForLogin || loginStatus}
             />
-
             <p className="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
           </form>
         </div>

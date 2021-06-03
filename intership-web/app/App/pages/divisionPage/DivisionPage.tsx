@@ -10,10 +10,19 @@ import DeleteModal from '../../components/deleteModal/DeleteModal';
 import EditModalDivision from '../../components/editModalDivision/EditModalDivision';
 import Table from '../../components/table/Table';
 
+/**
+ * @props match - acces the current page's url parameter
+ * @props history - application navigation history from history library
+ */
 type IProps = {
   match: any;
   history: History;
 };
+/**
+ * division Page as matched from the app component
+ * @param props - match and history
+ * @returns - the division page
+ */
 export default function DivisionPage(props: IProps) {
   const { openEdit, openDelete } = useSelector(
     (state: IStoreState) => state.Modal

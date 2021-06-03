@@ -5,6 +5,11 @@ import { Actions } from '../../../Actions/Actions';
 import { IStoreState } from '../../../Reducers/Reducers';
 import InputField from './../inputField2/InputField2';
 
+/**
+ * EditModalDivision
+ * @param id_organization - takes in the organization id
+ * @returns the edit  modal for the Division page
+ */
 function EditModalDivision({ id_organization }: { id_organization: number }) {
   const dispatch = useDispatch();
   const { toggleEdit, createDivision } = new Actions(dispatch);
@@ -19,8 +24,14 @@ function EditModalDivision({ id_organization }: { id_organization: number }) {
       setError('Please,Provide valid details!');
       return;
     }
-    createDivision({ name, id_organization, phone, id: editData.id || null });
-    toggleEdit();
+    createDivision({
+      name,
+      id_organization,
+      phone,
+      id: editData.id || null,
+    }).then(() => {
+      toggleEdit();
+    });
   };
   return (
     <div id="addEmployeeModal" className="modal fade show">

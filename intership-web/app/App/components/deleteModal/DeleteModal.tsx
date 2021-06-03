@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../../../Actions/Actions';
 import { IStoreState } from '../../../Reducers/Reducers';
 
+/**
+ * DeleteModal
+ * @param currentPage - the current page being rendered
+ * @returns - the delete modal for organization,division and empployee page
+ */
 function DeleteModal({ currentPage }: { currentPage: string }) {
   const dispatch = useDispatch();
   const { toggleDelete, deleteOrganization, deleteDivision, deleteEmployee } =

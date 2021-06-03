@@ -2,6 +2,13 @@ import { IActionType } from '../common';
 import { ActionTypes, AsyncActionTypes } from '../Actions/Consts';
 import { IOrganizationItem } from '../Actions/Models';
 
+/**
+ * Organization Props from the store
+ * @prop organizations - either a list of returned organization data or null
+ * @prop reload  -Optional state,used to determine a refresh of the organization data
+ * @prop loading - to signify a waiting request from the server
+ * @prop error - optional state, holds the error state related to the action from the organization action creators
+ */
 export interface IOrganization {
   loading: boolean;
   organizations: IOrganizationItem[] | null;
@@ -20,6 +27,12 @@ const initialState = {
   },
 };
 
+/**
+ * Organization reducer
+ * @param state the initial organization state
+ * @param action action object with type and payload as entries
+ * @returns the new state after fetch,create,edit or delete actions
+ */
 export default function reducer(
   state: IOrganization = initialState.state,
   action: IActionType
@@ -51,7 +64,7 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: true,
+        reload: !state.reload,
       };
 
     case `${ActionTypes.CREATE_ORG}${AsyncActionTypes.FAILURE}`:
@@ -69,7 +82,7 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: true,
+        reload: !state.reload,
       };
 
     case `${ActionTypes.EDIT_ORG}${AsyncActionTypes.FAILURE}`:
@@ -87,7 +100,7 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: true,
+        reload: !state.reload,
       };
 
     case `${ActionTypes.DELETE_ORG}${AsyncActionTypes.FAILURE}`:

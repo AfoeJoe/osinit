@@ -10,9 +10,18 @@ import Logo from '../../resources/Logo.png';
 import { routes } from '../../utils/constants';
 import './navBar.css';
 
+/**
+ * Navbar Props
+ * @prop loginStatus - login status statee from the   store
+ */
 type IProps = {
   loginStatus: boolean;
 };
+/**
+ * Navbar component
+ * @param props - combined props (loginstaus & action)
+ * @returns - the Navbar markup
+ */
 function Navbar(props: IProps & IDispatchProps) {
   const { loginStatus, actions } = props;
   return (
