@@ -1,9 +1,8 @@
-import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { IActionType, IDispatchProps } from '../../../common';
+import { IActionType, IDispatchProps, IHistory } from '../../../common';
 import { Actions } from '../../../Actions/Actions';
 import { IStoreState } from '../../../Reducers/Reducers';
 import CustomButton from '../../components/customButton/CustomButton';
@@ -35,7 +34,7 @@ interface IStateProps {
   error: string;
 }
 /**Combined props */
-type TProps = IStateProps & IDispatchProps & { history: History };
+type TProps = IStateProps & IDispatchProps & IHistory;
 
 class LoginPage extends React.Component<TProps, MyState> {
   constructor(props: TProps) {

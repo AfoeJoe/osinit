@@ -1,7 +1,7 @@
-import { History } from 'history';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { IHistory } from '../../../common';
 import { Actions } from '../../../Actions/Actions';
 import { IStoreState } from '../../../Reducers/Reducers';
 import BackButton from '../../components/backButton/BackButton';
@@ -16,7 +16,6 @@ import Table from '../../components/table/Table';
  */
 type IProps = {
   match: any;
-  history: History;
 };
 
 /**
@@ -24,7 +23,7 @@ type IProps = {
  * @param props - match and history
  * @returns - the employee page
  */
-export default function EemployeePage(props: IProps) {
+export default function EemployeePage(props: IProps & IHistory) {
   const { openEdit, openDelete } = useSelector(
     (state: IStoreState) => state.Modal
   );

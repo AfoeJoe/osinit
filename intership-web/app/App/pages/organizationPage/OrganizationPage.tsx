@@ -1,7 +1,7 @@
-import { History } from 'history';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { IHistory } from '../../../common';
 import { Actions } from '../../../Actions/Actions';
 import { IStoreState } from '../../../Reducers/Reducers';
 import BackButton from '../../components/backButton/BackButton';
@@ -15,7 +15,7 @@ import Table from '../../components/table/Table';
  * @param history  - Browser history passed to the backbutton component
  * @returns JSX Components that constituents  the Organization Page including the edit  and delete modals
  */
-export default function OrganizationPage({ history }: { history: History }) {
+export default function OrganizationPage({ history }: IHistory) {
   const { openEdit, openDelete } = useSelector(
     (state: IStoreState) => state.Modal
   );

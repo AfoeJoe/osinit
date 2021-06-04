@@ -6,12 +6,12 @@ import { IStoreState } from '../../../Reducers/Reducers';
 import InputField from './../inputField2/InputField2';
 
 /**
- * EditModal
- * @returns the edit  modal for the organizaion page
+ * EditModal - It is a modal to add an organization or update an existing organization
+ * @returns the add/edit modal for the organizaion page
  */
 function EditModal() {
   const dispatch = useDispatch();
-  const { toggleEdit, createOrganization } = new Actions(dispatch);
+  const { toggleEdit, sendOrganization } = new Actions(dispatch);
   const { editData, openEdit } = useSelector(
     (state: IStoreState) => state.Modal
   );
@@ -26,7 +26,7 @@ function EditModal() {
       setError('Please,Provide valid details!');
       return;
     }
-    createOrganization({
+    sendOrganization({
       name,
       address,
       INN: inn,

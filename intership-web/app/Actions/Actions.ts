@@ -122,7 +122,11 @@ export class Actions {
         });
       });
   };
-  createOrganization = async (orgData: IOrganizationItem) => {
+  /**
+   * sendOrganization -  adds organization. If orgData.id is passed,it updates the  organization
+   * @param orgData - Data to be updated
+   */
+  sendOrganization = async (orgData: IOrganizationItem) => {
     let keyWord: string, method: string, url: string;
     if (orgData.id) {
       keyWord = ActionTypes.EDIT_ORG;
@@ -191,13 +195,7 @@ export class Actions {
   };
 
   /*DIVISION ACTIONS*/
-  getDivisions = async (id = 0) => {
-    if (!id) {
-      return this.dispatch({
-        type: `${ActionTypes.FETCH_DIV}${AsyncActionTypes.FAILURE}`,
-        payload: 'Error,No ID passed!',
-      });
-    }
+  getDivisions = async (id: number) => {
     this.dispatch({
       type: `${ActionTypes.FETCH_DIV}${AsyncActionTypes.BEGIN}`,
     });
@@ -225,8 +223,11 @@ export class Actions {
         });
       });
   };
-
-  createDivision = async (divData: IDivisionItem) => {
+  /**
+   * sendDivision -  adds a division. If divData.id is passed,it updates the  division
+   * @param divData - Data to be updated
+   */
+  sendDivision = async (divData: IDivisionItem) => {
     let keyWord: string, method: string, url: string;
 
     if (divData.id) {
@@ -295,13 +296,7 @@ export class Actions {
   };
 
   /*EMPLOYEE ACTIONS*/
-  getEmployees = async (id_divsion = 0) => {
-    if (!id_divsion) {
-      return this.dispatch({
-        type: `${ActionTypes.FETCH_EMPLOYEES}${AsyncActionTypes.FAILURE}`,
-        payload: 'Error,No ID passed!',
-      });
-    }
+  getEmployees = async (id_divsion: number) => {
     this.dispatch({
       type: `${ActionTypes.FETCH_EMPLOYEES}${AsyncActionTypes.BEGIN}`,
     });
@@ -329,8 +324,11 @@ export class Actions {
         });
       });
   };
-
-  createEmployee = async (empData: IEmployeeItem) => {
+  /**
+   * sendEmployee -  adds an employee. If empData.id is passed,it updates the  employee
+   * @param empData - Data to be updated
+   */
+  sendEmployee = async (empData: IEmployeeItem) => {
     let keyWord: string, method: string, url: string;
 
     if (empData.id) {

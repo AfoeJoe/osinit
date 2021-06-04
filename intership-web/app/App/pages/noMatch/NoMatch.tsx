@@ -1,5 +1,5 @@
-import { History } from 'history';
 import * as React from 'react';
+import { IHistory } from '../../../common';
 
 import BackButton from '../../components/backButton/BackButton';
 /**
@@ -7,7 +7,7 @@ import BackButton from '../../components/backButton/BackButton';
  * @param history - Browser history passed to the backbutton component
  * @returns
  */
-function NoMatch({ history }: { history: History }) {
+function NoMatch({ history }: IHistory) {
   return (
     <div className="container">
       <div className="d-flex flex-row justify-content-between my-2">

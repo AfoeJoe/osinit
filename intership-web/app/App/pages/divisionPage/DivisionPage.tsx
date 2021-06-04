@@ -1,7 +1,7 @@
-import { History } from 'history';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { IHistory } from '../../../common';
 import { Actions } from '../../../Actions/Actions';
 import { IStoreState } from '../../../Reducers/Reducers';
 import BackButton from '../../components/backButton/BackButton';
@@ -12,18 +12,16 @@ import Table from '../../components/table/Table';
 
 /**
  * @props match - acces the current page's url parameter
- * @props history - application navigation history from history library
  */
 type IProps = {
   match: any;
-  history: History;
 };
 /**
  * division Page as matched from the app component
  * @param props - match and history
  * @returns - the division page
  */
-export default function DivisionPage(props: IProps) {
+export default function DivisionPage(props: IProps & IHistory) {
   const { openEdit, openDelete } = useSelector(
     (state: IStoreState) => state.Modal
   );

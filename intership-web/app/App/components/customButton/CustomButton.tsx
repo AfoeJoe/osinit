@@ -12,7 +12,8 @@ type ICustomButtonProps = {
   children?: any;
   disabled?: boolean;
   className?: string;
-  [otherProps: string]: any;
+  onClick?: 'MouseEventHandler<HTMLButtonElement>';
+  type?: 'submit' | 'reset' | 'button';
 };
 /**
  * CustomButton component
@@ -24,14 +25,15 @@ function CustomButton({
   children,
   disabled,
   className,
-  ...otherProps
+  type,
 }: ICustomButtonProps) {
   return (
     <div>
       <button
         className={`btn ${className}`}
         disabled={disabled}
-        {...otherProps}
+        type={type}
+        onClick={onclick}
       >
         {children}
         {text}

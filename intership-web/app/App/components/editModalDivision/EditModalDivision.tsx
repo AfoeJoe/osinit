@@ -6,13 +6,13 @@ import { IStoreState } from '../../../Reducers/Reducers';
 import InputField from './../inputField2/InputField2';
 
 /**
- * EditModalDivision
+ * EditModalDivision - It is a modal to add a division or update an existing division
  * @param id_organization - takes in the organization id
- * @returns the edit  modal for the Division page
+ * @returns the add/edit modal for the Division page
  */
 function EditModalDivision({ id_organization }: { id_organization: number }) {
   const dispatch = useDispatch();
-  const { toggleEdit, createDivision } = new Actions(dispatch);
+  const { toggleEdit, sendDivision } = new Actions(dispatch);
   const { editData } = useSelector((state: IStoreState) => state.Modal);
   const [name, setName] = React.useState(editData.name || '');
   const [phone, setPhone] = React.useState(editData.phone || 0);
@@ -24,7 +24,7 @@ function EditModalDivision({ id_organization }: { id_organization: number }) {
       setError('Please,Provide valid details!');
       return;
     }
-    createDivision({
+    sendDivision({
       name,
       id_organization,
       phone,

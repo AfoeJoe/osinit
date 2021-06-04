@@ -6,13 +6,13 @@ import { IStoreState } from '../../../Reducers/Reducers';
 import InputField from './../inputField2/InputField2';
 
 /**
- * EditModalEmployee
+ * EditModalEmployee  - It is a modal to add an employee or update an existing employee
  * @param id_division - takes in the division id
- * @returns the edit  modal for the employee page
+ * @returns the add/edit modal for the employee page
  */
 function EditModalEmployee({ id_division }: { id_division: number }) {
   const dispatch = useDispatch();
-  const { toggleEdit, createEmployee } = new Actions(dispatch);
+  const { toggleEdit, sendEmployee } = new Actions(dispatch);
   const { editData } = useSelector((state: IStoreState) => state.Modal);
   const [name, setName] = React.useState(editData.FIO || '');
   const [address, setAddress] = React.useState(editData.address || '');
@@ -25,7 +25,7 @@ function EditModalEmployee({ id_division }: { id_division: number }) {
       setError('Please,None of those fields can be left empty!');
       return;
     }
-    createEmployee({
+    sendEmployee({
       FIO: name,
       id_division,
       position,
