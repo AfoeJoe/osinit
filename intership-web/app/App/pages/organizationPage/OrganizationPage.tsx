@@ -22,12 +22,12 @@ export default function OrganizationPage({ history }: IHistory) {
   const dispatch = useDispatch();
   const actions = new Actions(dispatch);
 
-  const { organizations, loading, reload } = useSelector(
+  const { organizations, loading } = useSelector(
     (state: IStoreState) => state.Organization
   );
   React.useEffect(() => {
     actions.getOrganizations();
-  }, [reload, dispatch]);
+  }, [dispatch]);
   return (
     <div className="container ">
       <div className="d-flex flex-row justify-content-between my-2">
@@ -35,7 +35,7 @@ export default function OrganizationPage({ history }: IHistory) {
         <CustomButton
           text="Add Organization"
           className="d-flex btn-primary"
-          onClick={actions.toggleEdit}
+          handleClick={actions.toggleEdit}
         >
           <i className="material-icons">&#xE147;</i>{' '}
         </CustomButton>

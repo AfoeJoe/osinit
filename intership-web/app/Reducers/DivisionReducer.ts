@@ -5,7 +5,6 @@ import { IDivisionItem } from '../Actions/Models';
 /**
  * Division Props from the store
  * @prop Division  - either a list of returned Division data or null
- * @prop reload  -Optional state,used to determine a refresh of the Division data
  * @prop loading - to signify a waiting request from the server
  * @prop error - optional state, holds the error state related to the action from the Division action creators
  */
@@ -13,7 +12,6 @@ export interface IDivision {
   loading: boolean;
   divisions: null | IDivisionItem[];
   error?: string;
-  reload?: boolean;
 }
 const initialState = {
   get state(): IDivision {
@@ -21,7 +19,6 @@ const initialState = {
       loading: false,
       divisions: null,
       error: '',
-      reload: false,
     };
   },
 };
@@ -62,7 +59,6 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: true,
       };
 
     case `${ActionTypes.CREATE_DIV}${AsyncActionTypes.FAILURE}`:
@@ -80,7 +76,6 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: true,
       };
 
     case `${ActionTypes.EDIT_DIV}${AsyncActionTypes.FAILURE}`:
@@ -98,7 +93,6 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: true,
       };
 
     case `${ActionTypes.DELETE_DIV}${AsyncActionTypes.FAILURE}`:

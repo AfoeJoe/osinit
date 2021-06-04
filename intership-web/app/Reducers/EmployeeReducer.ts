@@ -5,7 +5,6 @@ import { IEmployeeItem } from '../Actions/Models';
 /**
  * employee Props from the store
  * @prop employees - either a list of returned employee data or null
- * @prop reload  -optional state,used to determine a refresh of the employee data
  * @prop loading - to signify a waiting request from the server
  * @prop error - optional state, holds the error state related to the action from the employee action creators
  */
@@ -13,7 +12,6 @@ export interface IEmployee {
   loading: boolean;
   employees: null | IEmployeeItem[];
   error?: string;
-  reload?: boolean;
 }
 
 const initialState = {
@@ -22,7 +20,6 @@ const initialState = {
       loading: false,
       employees: null,
       error: '',
-      reload: false,
     };
   },
 };
@@ -63,7 +60,6 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: true,
       };
 
     case `${ActionTypes.CREATE_EMPLOYEE}${AsyncActionTypes.FAILURE}`:
@@ -81,7 +77,6 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: true,
       };
 
     case `${ActionTypes.EDIT_EMPLOYEE}${AsyncActionTypes.FAILURE}`:
@@ -99,7 +94,6 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: true,
       };
 
     case `${ActionTypes.DELETE_EMPLOYEE}${AsyncActionTypes.FAILURE}`:

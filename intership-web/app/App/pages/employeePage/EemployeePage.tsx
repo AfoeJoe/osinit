@@ -29,14 +29,14 @@ export default function EemployeePage(props: IProps & IHistory) {
   );
   const dispatch = useDispatch();
   const actions = new Actions(dispatch);
-  const { employees, loading, reload } = useSelector(
+  const { employees, loading } = useSelector(
     (state: IStoreState) => state.Employee
   );
   let { id } = props.match.params;
 
   React.useEffect(() => {
     actions.getEmployees(id);
-  }, [reload, dispatch]);
+  }, [dispatch]);
 
   return (
     <div>
@@ -46,7 +46,7 @@ export default function EemployeePage(props: IProps & IHistory) {
           <CustomButton
             text="Add Employee"
             className="d-flex btn-primary"
-            onClick={actions.toggleEdit}
+            handleClick={actions.toggleEdit}
           >
             <i className="material-icons">&#xE147;</i>{' '}
           </CustomButton>

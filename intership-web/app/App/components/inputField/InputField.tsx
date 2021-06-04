@@ -9,8 +9,11 @@ import * as React from 'react';
 type IInputFieldProps = {
   label: string;
   id: string;
+  name: string;
+  type?: string;
+  isRequired: boolean;
+  value: string | null;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
-  [otherProps: string]: any;
 };
 
 /**
@@ -21,9 +24,11 @@ type IInputFieldProps = {
 function InputField({
   label,
   id,
+  name,
+  type,
   isRequired,
+  value,
   handleChange,
-  ...otherProps
 }: IInputFieldProps) {
   return (
     <div>
@@ -33,7 +38,9 @@ function InputField({
       <input
         id={id}
         className="form-control"
-        {...otherProps}
+        name={name}
+        type={type}
+        value={value}
         required={isRequired}
         onChange={handleChange}
       />
@@ -47,6 +54,7 @@ InputField.defaultProps = {
   placeholder: 'Fill in this form',
   label: 'Name',
   isRequired: false,
+  value: '',
 };
 
 export default InputField;

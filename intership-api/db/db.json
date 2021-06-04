@@ -20,12 +20,6 @@
       "id": 3,
       "name": "Joshua Okunola",
       "address": "2-ya yugozapagnaya 26a",
-      "INN": 5678975421
-    },
-    {
-      "id": 4,
-      "name": "Joshua Okunola",
-      "address": "2-ya yugozapagnaya 26a",
       "INN": 1234567895
     }
   ],
@@ -34,7 +28,7 @@
       "id": 1,
       "id_organization": 1,
       "name": "Division 1",
-      "phone": "12345"
+      "phone": "123456"
     },
     {
       "id": 6,

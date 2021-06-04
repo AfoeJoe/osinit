@@ -10,7 +10,7 @@ import CustomButton from '../customButton/CustomButton';
  */
 const BackButton: React.FC<IHistory> = ({ history }) => (
   <CustomButton
-    onClick={() => history.goBack()}
+    handleClick={() => history.goBack()}
     text="Back"
     className="d-flex btn-primary"
   >

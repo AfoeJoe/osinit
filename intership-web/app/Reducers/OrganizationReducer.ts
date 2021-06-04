@@ -5,7 +5,6 @@ import { IOrganizationItem } from '../Actions/Models';
 /**
  * Organization Props from the store
  * @prop organizations - either a list of returned organization data or null
- * @prop reload  -Optional state,used to determine a refresh of the organization data
  * @prop loading - to signify a waiting request from the server
  * @prop error - optional state, holds the error state related to the action from the organization action creators
  */
@@ -13,7 +12,6 @@ export interface IOrganization {
   loading: boolean;
   organizations: IOrganizationItem[] | null;
   error?: string;
-  reload?: boolean;
 }
 
 const initialState = {
@@ -22,7 +20,6 @@ const initialState = {
       loading: false,
       organizations: null,
       error: '',
-      reload: false,
     };
   },
 };
@@ -64,7 +61,6 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: !state.reload,
       };
 
     case `${ActionTypes.CREATE_ORG}${AsyncActionTypes.FAILURE}`:
@@ -82,7 +78,6 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: !state.reload,
       };
 
     case `${ActionTypes.EDIT_ORG}${AsyncActionTypes.FAILURE}`:
@@ -100,7 +95,6 @@ export default function reducer(
       return {
         ...state,
         loading: false,
-        reload: !state.reload,
       };
 
     case `${ActionTypes.DELETE_ORG}${AsyncActionTypes.FAILURE}`:

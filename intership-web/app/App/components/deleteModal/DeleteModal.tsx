@@ -21,8 +21,8 @@ function DeleteModal({ currentPage }: { currentPage: string }) {
       currentPage === 'organization'
         ? deleteOrganization(deleteData.id)
         : currentPage === 'division'
-        ? deleteDivision(deleteData.id)
-        : deleteEmployee(deleteData.id);
+        ? deleteDivision(deleteData.id, deleteData.id_organization)
+        : deleteEmployee(deleteData.id, deleteData.id_division);
     result
       .then(() => {
         toggleDelete(null);

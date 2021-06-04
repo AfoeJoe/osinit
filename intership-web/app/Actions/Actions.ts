@@ -154,6 +154,7 @@ export class Actions {
             type: `${keyWord}${AsyncActionTypes.SUCCESS}`,
             payload: data,
           });
+          this.getOrganizations();
           return data;
         });
       })
@@ -183,6 +184,7 @@ export class Actions {
             type: `${ActionTypes.DELETE_ORG}${AsyncActionTypes.SUCCESS}`,
             payload: data,
           });
+          this.getOrganizations();
           return data;
         });
       })
@@ -256,6 +258,7 @@ export class Actions {
             type: `${keyWord}${AsyncActionTypes.SUCCESS}`,
             payload: data,
           });
+          this.getDivisions(divData.id_organization);
           return data;
         });
       })
@@ -266,7 +269,7 @@ export class Actions {
         });
       });
   };
-  deleteDivision = async (id: number) => {
+  deleteDivision = async (id: number, id_organization: number) => {
     this.dispatch({
       type: `${ActionTypes.DELETE_DIV}${AsyncActionTypes.BEGIN}`,
     });
@@ -284,6 +287,7 @@ export class Actions {
             type: `${ActionTypes.DELETE_DIV}${AsyncActionTypes.SUCCESS}`,
             payload: data,
           });
+          this.getDivisions(id_organization);
           return data;
         });
       })
@@ -357,6 +361,7 @@ export class Actions {
             type: `${keyWord}${AsyncActionTypes.SUCCESS}`,
             payload: data,
           });
+          this.getDivisions(empData.id_division);
           return data;
         });
       })
@@ -367,7 +372,7 @@ export class Actions {
         });
       });
   };
-  deleteEmployee = async (id: number) => {
+  deleteEmployee = async (id: number, id_division: number) => {
     this.dispatch({
       type: `${ActionTypes.DELETE_EMPLOYEE}${AsyncActionTypes.BEGIN}`,
     });
@@ -384,6 +389,7 @@ export class Actions {
           this.dispatch({
             type: `${ActionTypes.DELETE_EMPLOYEE}${AsyncActionTypes.SUCCESS}`,
           });
+          this.getDivisions(id_division);
           return data;
         });
       })

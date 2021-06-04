@@ -12,7 +12,7 @@ type ICustomButtonProps = {
   children?: any;
   disabled?: boolean;
   className?: string;
-  onClick?: 'MouseEventHandler<HTMLButtonElement>';
+  handleClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'submit' | 'reset' | 'button';
 };
 /**
@@ -25,6 +25,7 @@ function CustomButton({
   children,
   disabled,
   className,
+  handleClick,
   type,
 }: ICustomButtonProps) {
   return (
@@ -33,7 +34,7 @@ function CustomButton({
         className={`btn ${className}`}
         disabled={disabled}
         type={type}
-        onClick={onclick}
+        onClick={handleClick}
       >
         {children}
         {text}

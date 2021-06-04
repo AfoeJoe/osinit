@@ -27,14 +27,14 @@ export default function DivisionPage(props: IProps & IHistory) {
   );
   const dispatch = useDispatch();
   const actions = new Actions(dispatch);
-  const { divisions, loading, reload } = useSelector(
+  const { divisions, loading } = useSelector(
     (state: IStoreState) => state.Division
   );
   const { id } = props.match.params;
 
   React.useEffect(() => {
     actions.getDivisions(id);
-  }, [reload, dispatch]);
+  }, [dispatch]);
   return (
     <div>
       <div className="container ">
@@ -43,7 +43,7 @@ export default function DivisionPage(props: IProps & IHistory) {
           <CustomButton
             text="Add Division"
             className="d-flex btn-primary"
-            onClick={actions.toggleEdit}
+            handleClick={actions.toggleEdit}
           >
             <i className="material-icons">&#xE147;</i>{' '}
           </CustomButton>
