@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CSSTransition } from 'react-transition-group'; // ES6
 
 import { IHistory } from '../../../common';
 import { Actions } from '../../../Actions/Actions';
@@ -55,10 +56,23 @@ export default function EemployeePage(props: IProps & IHistory) {
           {loading && 'loading...'}
           {employees && <Table data={employees} currentPage="employee" />}
         </div>
-        {/* Edit Modal HTM*/}
-        {openEdit && <EditModalEmployee id_division={id} />}
-        {/*Delete Modal HTML*/}
-        {openDelete && <DeleteModal currentPage="employee" />}
+
+        <CSSTransition
+          in={openEdit}
+          timeout={300}
+          classNames="alert"
+          unmountOnExit
+        >
+          <EditModalEmployee id_division={id} />
+        </CSSTransition>
+        <CSSTransition
+          in={openDelete}
+          timeout={300}
+          classNames="alert"
+          unmountOnExit
+        >
+          <DeleteModal currentPage="employee" />
+        </CSSTransition>
       </div>
     </div>
   );

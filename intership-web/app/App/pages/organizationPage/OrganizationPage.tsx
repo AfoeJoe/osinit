@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CSSTransition } from 'react-transition-group'; // ES6
 
 import { IHistory } from '../../../common';
 import { Actions } from '../../../Actions/Actions';
@@ -46,8 +47,23 @@ export default function OrganizationPage({ history }: IHistory) {
           <Table data={organizations} currentPage="organization" />
         )}
       </div>
-      {openEdit && <EditModal />}
-      {openDelete && <DeleteModal currentPage="organization" />}
+
+      <CSSTransition
+        in={openEdit}
+        timeout={300}
+        classNames="alert"
+        unmountOnExit
+      >
+        <EditModal />
+      </CSSTransition>
+      <CSSTransition
+        in={openDelete}
+        timeout={300}
+        classNames="alert"
+        unmountOnExit
+      >
+        <DeleteModal currentPage="organization" />
+      </CSSTransition>
     </div>
   );
 }

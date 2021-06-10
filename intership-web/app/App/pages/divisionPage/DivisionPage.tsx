@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CSSTransition } from 'react-transition-group'; // ES6
 
 import { IHistory } from '../../../common';
 import { Actions } from '../../../Actions/Actions';
@@ -52,11 +53,23 @@ export default function DivisionPage(props: IProps & IHistory) {
           {loading && 'loading...'}
           {divisions && <Table data={divisions} currentPage="division" />}
         </div>
-        {/* Edit Modal HTM*/}
-        {openEdit && <EditModalDivision id_organization={id} />}
 
-        {/*Delete Modal HTML*/}
-        {openDelete && <DeleteModal currentPage="division" />}
+        <CSSTransition
+          in={openEdit}
+          timeout={300}
+          classNames="alert"
+          unmountOnExit
+        >
+          <EditModalDivision id_organization={id} />
+        </CSSTransition>
+        <CSSTransition
+          in={openDelete}
+          timeout={300}
+          classNames="alert"
+          unmountOnExit
+        >
+          <DeleteModal currentPage="division" />
+        </CSSTransition>
       </div>
     </div>
   );

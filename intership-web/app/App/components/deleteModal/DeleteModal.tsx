@@ -56,9 +56,10 @@ function DeleteModal({ currentPage }: { currentPage: string }) {
             <div className="modal-body">
               <p>
                 Are you sure you want to delete record
-                {Object.keys(deleteData).map(
-                  (element) => ` ${element} of ${deleteData[element]}\n`
-                )}
+                {deleteData &&
+                  Object.keys(deleteData).map(
+                    (element) => ` ${element} of ${deleteData[element]}\n`
+                  )}
                 ?
               </p>
               <p className="text-warning">

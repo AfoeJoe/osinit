@@ -28,7 +28,6 @@ export default function Table({ data = null, currentPage }: IProps) {
     <table className="table table-hover">
       <Thead heading={headingList} />
       <tbody>
-        {console.log(data)}
         {data[0] &&
           data.map((row: any) => (
             <RowData

@@ -12,9 +12,7 @@ import InputField from './../inputField2/InputField2';
 function EditModal() {
   const dispatch = useDispatch();
   const { toggleEdit, sendOrganization } = new Actions(dispatch);
-  const { editData, openEdit } = useSelector(
-    (state: IStoreState) => state.Modal
-  );
+  const { editData } = useSelector((state: IStoreState) => state.Modal);
   const [name, setName] = React.useState(editData.name || '');
   const [address, setAddress] = React.useState(editData.address || '');
   const [inn, setInn] = React.useState(editData.INN || 0);
@@ -37,10 +35,7 @@ function EditModal() {
   };
 
   return (
-    <div
-      id="addEmployeeModal"
-      className={openEdit ? 'modal fade  show' : 'modal fade'}
-    >
+    <div id="addEmployeeModal" className="modal">
       <div className="modal-dialog">
         <div className="modal-content">
           <form onSubmit={handleSubmit}>
