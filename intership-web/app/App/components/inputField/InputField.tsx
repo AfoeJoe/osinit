@@ -13,6 +13,7 @@ type IInputFieldProps = {
   type?: string;
   isRequired: boolean;
   value: string | null;
+  autoComplete?: string;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
@@ -28,6 +29,7 @@ function InputField({
   type,
   isRequired,
   value,
+  autoComplete,
   handleChange,
 }: IInputFieldProps) {
   return (
@@ -42,6 +44,7 @@ function InputField({
         type={type}
         value={value}
         required={isRequired}
+        autoComplete={autoComplete}
         onChange={handleChange}
       />
     </div>

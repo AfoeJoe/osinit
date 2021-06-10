@@ -57,6 +57,11 @@ export class Actions {
     return returnValue;
   };
 
+  onSubsequentLogin = (): void => {
+    this.dispatch({
+      type: `${ActionTypes.LOGIN}${AsyncActionTypes.SUCCESS}`,
+    });
+  };
   /**
    * onLogout
    * @return - void
@@ -76,6 +81,7 @@ export class Actions {
       .catch(() => {
         this.dispatch({ type: ActionTypes.LOGOUT });
       });
+    localStorage.clear();
   };
 
   /**

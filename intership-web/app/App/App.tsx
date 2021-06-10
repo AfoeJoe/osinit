@@ -1,6 +1,10 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
+import { IActionType, IDispatchProps } from '../common';
+import { Actions } from '../Actions/Actions';
 import { history } from '../Store/Store';
 import NavBar from './components/navBar/NavBar';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
@@ -16,7 +20,15 @@ import './App.css';
  * Main application class
  * It houses the layout of the app (Navbar + the list of routes/protected routes)
  */
-export class App extends React.Component<{}, {}> {
+export class App extends React.Component<IDispatchProps, {}> {
+  constructor(props: IDispatchProps) {
+    super(props);
+    /**Check if local storage contains login status */
+    const isSet = localStorage.getItem('rememberMe');
+    if (isSet === 'true' && localStorage.getItem('isLoggedIn') === 'true') {
+      this.props.actions.onSubsequentLogin();
+    }
+  }
   render() {
     return (
       <>
@@ -39,3 +51,11 @@ export class App extends React.Component<{}, {}> {
     );
   }
 }
+
+function mapDispatchToProps(dispatch: Dispatch<IActionType>): IDispatchProps {
+  return {
+    actions: new Actions(dispatch),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(App);

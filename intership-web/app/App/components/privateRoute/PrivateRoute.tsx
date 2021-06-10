@@ -24,7 +24,7 @@ function PrivateRoute({ comp: Component, loginStatus, ...otherProps }: IProps) {
     <Route
       {...otherProps}
       render={(props) =>
-        loginStatus ? (
+        !!loginStatus ? (
           <Component {...otherProps} {...props} />
         ) : (
           <Redirect

@@ -20,6 +20,7 @@ import './login.css';
 type MyState = {
   username: string;
   password: string;
+  rememberMe: boolean;
   stateError: string;
 };
 /**
@@ -43,14 +44,15 @@ class LoginPage extends React.Component<TProps, MyState> {
       username: '',
       password: '',
       stateError: '',
+      rememberMe: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
   handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    const { username, password } = this.state;
+    const { username, password, rememberMe } = this.state;
+
     if (!username || !password) {
       this.setState({ stateError: 'Please, fill in your login details' });
       return;
@@ -62,6 +64,8 @@ class LoginPage extends React.Component<TProps, MyState> {
     result
       .then((res) => {
         if (res.isLogin) {
+          localStorage.setItem('rememberMe', rememberMe.toString());
+          rememberMe ? localStorage.setItem('isLoggedIn', 'true') : '';
           const from =
             (this.props.history.location.state &&
               this.props.history.location.state.from.pathname) ||
@@ -76,7 +80,9 @@ class LoginPage extends React.Component<TProps, MyState> {
       });
   }
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { value, name } = e.target;
+    const { name } = e.target;
+    const value =
+      e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     this.setState({ ...this.state, [name]: value });
   }
   render() {
@@ -108,6 +114,17 @@ class LoginPage extends React.Component<TProps, MyState> {
               handleChange={this.handleChange}
               value={password}
             />
+            <div className="checkbox mb-3">
+              <label>
+                <input
+                  type="checkbox"
+                  value="remember-me"
+                  name="rememberMe"
+                  onChange={this.handleChange}
+                />
+                Remember me
+              </label>
+            </div>
             {(error || stateError) && (
               <div className="alert alert-danger" role="alert">
                 {typeof error !== 'object' && error}
