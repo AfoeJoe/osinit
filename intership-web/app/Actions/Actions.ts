@@ -57,6 +57,9 @@ export class Actions {
     return returnValue;
   };
 
+  /**
+   * onSubsequentLogin - this is called as the app launches to check for auth persistence.
+   */
   onSubsequentLogin = (): void => {
     this.dispatch({
       type: `${ActionTypes.LOGIN}${AsyncActionTypes.SUCCESS}`,
